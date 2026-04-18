@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Cormorant_Garamond, DM_Sans, Space_Mono } from "next/font/google";
 import "./globals.css";
 import { SmoothScroll } from "@/components/SmoothScroll";
+import { Navigation } from "@/components/Navigation";
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-cormorant",
@@ -23,7 +24,7 @@ const spaceMono = Space_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Yeside Kazeem FIA, FNAS — Actuary. Builder. Board Director.",
+  title: "Yeside Kazeem FIA, FNAS · Actuary. Builder. Board Director.",
   description:
     "Entrepreneurial actuary and institution-builder operating across London and Africa. Board Advisory · Speaking · Africa Mission.",
   openGraph: {
@@ -42,6 +43,7 @@ export default function RootLayout({
       className={`${cormorant.variable} ${dmSans.variable} ${spaceMono.variable}`}
     >
       <body>
+        <Navigation />
         <SmoothScroll>
           {children}
         </SmoothScroll>

@@ -3,32 +3,47 @@
 import { useEffect, useRef } from "react";
 import Image from "next/image";
 
+const LINKEDIN = "https://www.linkedin.com/in/yesidekazeem/";
+
 export function Hero() {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     async function init() {
-      const { gsap: g } = await import("gsap");
+      const { gsap } = await import("gsap");
       const { ScrollTrigger } = await import("gsap/ScrollTrigger");
-      g.registerPlugin(ScrollTrigger);
+      gsap.registerPlugin(ScrollTrigger);
 
-      const tl = g.timeline({ delay: 0.2 });
-      tl.fromTo(".hero-coords", { opacity: 0 }, { opacity: 1, duration: 0.8 });
-      tl.fromTo(".hero-bg-photo", { opacity: 0 }, { opacity: 1, duration: 1.4, ease: "power2.out" }, "-=0.4");
-      tl.fromTo(".hero-line-1", { y: 140, opacity: 0 }, { y: 0, opacity: 1, duration: 0.9, ease: "power3.out" }, "-=0.9");
-      tl.fromTo(".hero-line-2", { y: 140, opacity: 0 }, { y: 0, opacity: 1, duration: 0.9, ease: "power3.out" }, "-=0.65");
-      tl.fromTo(".hero-cred", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.6 }, "-=0.3");
-      tl.fromTo(".hero-tagline", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.7 }, "-=0.4");
-      tl.fromTo(".hero-scroll", { opacity: 0 }, { opacity: 1, duration: 0.5 });
+      // Entrance
+      const tl = gsap.timeline({ delay: 0.1 });
+      tl.fromTo(".yk-n1", { y: 120, opacity: 0 }, { y: 0, opacity: 1, duration: 0.9, ease: "power3.out" });
+      tl.fromTo(".yk-n2", { y: 120, opacity: 0 }, { y: 0, opacity: 1, duration: 0.9, ease: "power3.out" }, "-=0.62");
+      tl.fromTo(".yk-rule", { scaleX: 0 }, { scaleX: 1, duration: 0.8, ease: "power2.inOut" }, "-=0.4");
+      tl.fromTo(".yk-photo", { opacity: 0, x: 28 }, { opacity: 1, x: 0, duration: 1.1, ease: "power2.out" }, "-=0.9");
+      tl.fromTo(".yk-sub", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.6, stagger: 0.12 }, "-=0.45");
+      tl.fromTo(".yk-cta", { opacity: 0 }, { opacity: 1, duration: 0.5, stagger: 0.1 }, "-=0.2");
 
-      g.to(".hero-bg-photo", {
-        y: 60,
+      // Scroll parallax on photo
+      gsap.to(".yk-photo", {
+        y: -50,
         ease: "none",
         scrollTrigger: {
-          trigger: containerRef.current,
+          trigger: ref.current,
           start: "top top",
           end: "bottom top",
-          scrub: true,
+          scrub: 1.2,
+        },
+      });
+
+      // Name drifts up slightly on scroll
+      gsap.to(".yk-names", {
+        y: -30,
+        ease: "none",
+        scrollTrigger: {
+          trigger: ref.current,
+          start: "top top",
+          end: "bottom top",
+          scrub: 1.5,
         },
       });
     }
@@ -37,92 +52,110 @@ export function Hero() {
 
   return (
     <section
-      ref={containerRef}
-      className="relative w-full min-h-screen overflow-hidden flex flex-col justify-end"
-      style={{ background: "#080808" }}
+      ref={ref}
+      className="relative w-full min-h-screen flex items-center overflow-hidden"
+      style={{ background: "#ffffff" }}
     >
-      {/* Full background photo */}
-      <div className="hero-bg-photo absolute inset-0 opacity-0">
-        <Image
-          src="/images/yeside-hero.jpg"
-          alt="Yeside Kazeem"
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover"
-          style={{ objectPosition: "center top", filter: "grayscale(15%) contrast(1.05)" }}
-        />
-        <div className="absolute inset-0" style={{
-          background: "linear-gradient(105deg, rgba(8,8,8,0.96) 0%, rgba(8,8,8,0.75) 45%, rgba(8,8,8,0.25) 100%)"
-        }} />
-        <div className="absolute inset-0" style={{
-          background: "linear-gradient(to top, rgba(8,8,8,1) 0%, rgba(8,8,8,0.55) 30%, transparent 65%)"
-        }} />
-      </div>
+      <div className="w-full px-6 md:px-16 pt-24 pb-16">
+        <div className="flex flex-col lg:flex-row lg:items-center">
 
-      {/* Coordinates top left */}
-      <div className="hero-coords absolute top-10 left-6 md:left-16 opacity-0" style={{
-        fontFamily: "var(--font-mono)", fontSize: "10px",
-        color: "rgba(255,255,255,0.35)", letterSpacing: "0.18em",
-      }}>
-        51.5074°N, 0.1278°W — LONDON
-      </div>
-
-      {/* Blue accent line right */}
-      <div className="absolute right-12 top-0 bottom-0 hidden lg:block" style={{
-        width: "1px",
-        background: "linear-gradient(to bottom, transparent 0%, #1B3A6B 30%, #1B3A6B 70%, transparent 100%)",
-        opacity: 0.4,
-      }} />
-
-      {/* Content bottom-anchored */}
-      <div className="relative z-10 px-6 md:px-16 pb-14 pt-40">
-        <div style={{ overflow: "hidden", marginBottom: "4px" }}>
-          <div className="hero-line-1" style={{
-            fontFamily: "var(--font-cormorant)",
-            fontSize: "clamp(72px, 14vw, 200px)",
-            fontWeight: 600, color: "#ffffff",
-            lineHeight: 0.88, letterSpacing: "-0.03em",
-          }}>
-            YESIDE
-          </div>
-        </div>
-        <div style={{ overflow: "hidden", marginBottom: "28px" }}>
-          <div className="hero-line-2" style={{
-            fontFamily: "var(--font-cormorant)",
-            fontSize: "clamp(72px, 14vw, 200px)",
-            fontWeight: 600, color: "#ffffff",
-            lineHeight: 0.88, letterSpacing: "-0.03em",
-          }}>
-            KAZEEM
-          </div>
-        </div>
-
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
-          <div>
-            <div className="hero-cred mb-3 opacity-0" style={{
-              fontFamily: "var(--font-mono)", fontSize: "10px",
-              color: "rgba(255,255,255,0.4)", letterSpacing: "0.22em",
-            }}>
-              FIA · FNAS · BOARD DIRECTOR · ACTUARY
+          {/* Text */}
+          <div className="yk-names flex-1 lg:pr-10">
+            <div style={{ overflow: "hidden" }}>
+              <div className="yk-n1" style={{
+                fontFamily: "var(--font-cormorant)",
+                fontSize: "clamp(82px, 17vw, 240px)",
+                fontWeight: 600, color: "#0A0A0A",
+                lineHeight: 0.86, letterSpacing: "-0.03em",
+                opacity: 0,
+              }}>
+                YESIDE
+              </div>
             </div>
-            <p className="hero-tagline opacity-0" style={{
-              fontFamily: "var(--font-cormorant)",
-              fontSize: "clamp(18px, 2vw, 24px)",
-              fontWeight: 300, fontStyle: "italic",
-              color: "rgba(255,255,255,0.6)",
-              maxWidth: "440px", lineHeight: 1.45,
+            <div style={{ overflow: "hidden" }}>
+              <div className="yk-n2" style={{
+                fontFamily: "var(--font-cormorant)",
+                fontSize: "clamp(82px, 17vw, 240px)",
+                fontWeight: 600, color: "#0A0A0A",
+                lineHeight: 0.86, letterSpacing: "-0.03em",
+                opacity: 0,
+              }}>
+                KAZEEM
+              </div>
+            </div>
+
+            {/* Drawn rule */}
+            <div className="yk-rule" style={{
+              height: "1px",
+              background: "rgba(10,10,10,0.12)",
+              transformOrigin: "left center",
+              transform: "scaleX(0)",
+              marginTop: "24px",
+              marginBottom: "24px",
+              maxWidth: "600px",
+            }} />
+
+            <div className="yk-sub" style={{
+              fontFamily: "var(--font-mono)", fontSize: "12px",
+              color: "rgba(10,10,10,0.65)", letterSpacing: "0.2em",
+              marginBottom: "18px", opacity: 0,
             }}>
-              Entrepreneurial actuary. Building what Africa's financial future needs.
+              FIA · FNAS · BOARD DIRECTOR · CO-FOUNDER
+            </div>
+
+            <p className="yk-sub" style={{
+              fontFamily: "var(--font-cormorant)",
+              fontSize: "clamp(20px, 2.2vw, 27px)",
+              fontStyle: "italic", fontWeight: 300,
+              color: "rgba(10,10,10,0.72)",
+              maxWidth: "440px", lineHeight: 1.45,
+              marginBottom: "40px", opacity: 0,
+            }}>
+              She builds what Africa&apos;s financial future needs.
             </p>
+
+            <div className="flex flex-wrap gap-4">
+              <a href={LINKEDIN} target="_blank" rel="noopener noreferrer"
+                className="yk-cta"
+                style={{
+                  fontFamily: "var(--font-mono)", fontSize: "12px",
+                  color: "#ffffff", letterSpacing: "0.16em",
+                  textDecoration: "none", opacity: 0,
+                  background: "#1B3A6B",
+                  border: "1px solid #1B3A6B",
+                  padding: "13px 26px",
+                  display: "inline-block",
+                }}>
+                INVITE TO SPEAK →
+              </a>
+              <a href={LINKEDIN} target="_blank" rel="noopener noreferrer"
+                className="yk-cta"
+                style={{
+                  fontFamily: "var(--font-mono)", fontSize: "12px",
+                  color: "#1B3A6B", letterSpacing: "0.16em",
+                  textDecoration: "none", opacity: 0,
+                  background: "transparent",
+                  border: "1px solid #1B3A6B",
+                  padding: "13px 26px",
+                  display: "inline-block",
+                }}>
+                BOARD ENQUIRIES →
+              </a>
+            </div>
           </div>
-          <div className="hero-scroll opacity-0 flex items-center gap-3" style={{
-            fontFamily: "var(--font-mono)", fontSize: "9px",
-            color: "rgba(255,255,255,0.25)", letterSpacing: "0.2em",
+
+          {/* Photo */}
+          <div className="yk-photo flex-shrink-0 mt-12 lg:mt-0" style={{
+            width: "clamp(220px, 34vw, 460px)", opacity: 0,
           }}>
-            <div style={{ width: "32px", height: "1px", background: "rgba(255,255,255,0.25)" }} />
-            SCROLL
+            <Image
+              src="/images/yeside-hero.jpg"
+              alt="Yeside Kazeem FIA FNAS"
+              width={460} height={540} priority
+              style={{ width: "100%", height: "auto", display: "block" }}
+            />
           </div>
+
         </div>
       </div>
     </section>

@@ -2,11 +2,12 @@
 
 import { useEffect, useRef } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 const LINKEDIN = "https://www.linkedin.com/in/yesidekazeem/";
 
 export function AfricaSection() {
-  const sectionRef = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     async function init() {
@@ -15,17 +16,48 @@ export function AfricaSection() {
       gsap.registerPlugin(ScrollTrigger);
 
       const ctx = gsap.context(() => {
-        gsap.fromTo(".africa-content",
-          { opacity: 0, y: 30 },
-          { opacity: 1, y: 0, duration: 0.9, ease: "power2.out",
-            scrollTrigger: { trigger: ".africa-content", start: "top 75%" } }
-        );
-        gsap.fromTo(".africa-card",
-          { opacity: 0, y: 24 },
-          { opacity: 1, y: 0, stagger: 0.1, duration: 0.8, ease: "power2.out",
-            scrollTrigger: { trigger: ".africa-card", start: "top 80%" } }
-        );
-      }, sectionRef);
+        // Rule
+        gsap.fromTo(".af-rule", { scaleX: 0 }, {
+          scaleX: 1, duration: 0.9, ease: "power2.inOut",
+          scrollTrigger: { trigger: ref.current, start: "top 85%" },
+        });
+
+        // Image clip-path wipe from right
+        gsap.fromTo(".af-img-wrap", { clipPath: "inset(0 100% 0 0)" }, {
+          clipPath: "inset(0 0% 0 0)", duration: 1.3, ease: "power3.inOut",
+          scrollTrigger: { trigger: ".af-img-wrap", start: "top 78%" },
+        });
+
+        // Parallax on image
+        gsap.to(".af-img-inner", {
+          y: -50,
+          ease: "none",
+          scrollTrigger: {
+            trigger: ref.current,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 1.5,
+          },
+        });
+
+        // Text stagger
+        gsap.fromTo(".af-label", { opacity: 0, y: 16 }, {
+          opacity: 1, y: 0, duration: 0.6,
+          scrollTrigger: { trigger: ".af-text", start: "top 78%" },
+        });
+        gsap.fromTo(".af-headline", { opacity: 0, y: 36 }, {
+          opacity: 1, y: 0, duration: 0.95, ease: "power2.out",
+          scrollTrigger: { trigger: ".af-text", start: "top 75%" },
+        });
+        gsap.fromTo(".af-body", { opacity: 0, y: 20 }, {
+          opacity: 1, y: 0, duration: 0.85, ease: "power2.out", delay: 0.15,
+          scrollTrigger: { trigger: ".af-text", start: "top 75%" },
+        });
+        gsap.fromTo(".af-ctas", { opacity: 0 }, {
+          opacity: 1, duration: 0.6, delay: 0.3,
+          scrollTrigger: { trigger: ".af-text", start: "top 72%" },
+        });
+      }, ref);
 
       return () => ctx.revert();
     }
@@ -33,154 +65,103 @@ export function AfricaSection() {
   }, []);
 
   return (
-    <section
-      id="africa"
-      ref={sectionRef}
-      className="w-full"
-      style={{ background: "#ffffff", scrollMarginTop: "0px" }}
-    >
-      {/* GAIN photo — full bleed with strong bottom gradient so text is readable */}
-      <div className="relative w-full" style={{ height: "45vh", minHeight: "320px" }}>
-        <Image
-          src="/images/gain-qa.jpg"
-          alt="GAIN Q&A — Yeside Kazeem, Founder AADA"
-          fill
-          sizes="100vw"
-          className="object-cover"
-          style={{ objectPosition: "center 25%" }}
-        />
-        {/* Strong bottom fade so no bleed into text below */}
-        <div className="absolute inset-0" style={{
-          background: "linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,0.6) 60%, rgba(255,255,255,1) 100%)"
-        }} />
-        {/* Left fade */}
-        <div className="absolute inset-0" style={{
-          background: "linear-gradient(to right, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0) 45%)"
-        }} />
-        {/* Label over image */}
-        <div className="absolute bottom-6 left-6 md:left-16 flex items-center gap-3" style={{
-          fontFamily: "var(--font-mono)", fontSize: "9px",
-          color: "#1B3A6B", letterSpacing: "0.22em",
-        }}>
-          <div style={{ width: "32px", height: "1px", background: "#1B3A6B" }} />
-          03 · AFRICA MISSION
-        </div>
-      </div>
+    <section id="africa" ref={ref} style={{ background: "#ffffff" }}>
+      {/* Rule */}
+      <div className="af-rule px-6 md:px-16" style={{
+        height: "1px", background: "rgba(10,10,10,0.07)",
+        transformOrigin: "left center", transform: "scaleX(0)",
+      }} />
 
-      <div className="px-6 md:px-16 pb-24">
-        {/* Headline */}
-        <div className="africa-content mb-14" style={{ opacity: 0 }}>
-          <h2 style={{
-            fontFamily: "var(--font-cormorant)",
-            fontSize: "clamp(34px, 4.8vw, 64px)",
-            fontWeight: 500, color: "#0A0A0A",
-            lineHeight: 1.1, marginBottom: "20px", maxWidth: "740px",
-          }}>
-            Building the profession the continent needs.
-          </h2>
-          <p style={{
-            fontFamily: "var(--font-dm)",
-            fontSize: "clamp(15px, 1.3vw, 17px)",
-            color: "rgba(10,10,10,0.6)", lineHeight: 1.85, maxWidth: "560px",
-          }}>
-            Africa does not just need more actuaries. It needs institutions, pipelines, and data infrastructure that will sustain the profession for generations. Yeside has spent her career building exactly that.
-          </p>
-        </div>
+      <div className="px-6 md:px-16 py-20 lg:py-28">
+        <div className="flex flex-col lg:flex-row gap-16 lg:gap-24 items-center">
 
-        {/* Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-14">
-          {/* AADA */}
-          <div className="africa-card md:col-span-2" style={{
-            background: "#0F1F3D", padding: "36px 40px",
-            borderRadius: "4px", opacity: 0,
-          }}>
-            <div style={{
-              fontFamily: "var(--font-mono)", fontSize: "8px",
-              color: "rgba(255,255,255,0.3)", letterSpacing: "0.2em", marginBottom: "12px",
+          {/* GAIN Q&A — clip-path reveal */}
+          <div className="flex-shrink-0" style={{ width: "clamp(260px, 40vw, 520px)" }}>
+            <div className="af-img-wrap" style={{
+              clipPath: "inset(0 100% 0 0)",
+              overflow: "hidden",
             }}>
-              CO-FOUNDER · 2024
-            </div>
-            <h3 style={{
-              fontFamily: "var(--font-cormorant)",
-              fontSize: "clamp(20px, 2.4vw, 30px)",
-              fontWeight: 600, color: "#ffffff",
-              marginBottom: "12px", lineHeight: 1.2,
-            }}>
-              African Actuarial Development Academy
-            </h3>
-            <p style={{
-              fontFamily: "var(--font-dm)", fontSize: "14px",
-              color: "rgba(255,255,255,0.58)", lineHeight: 1.75, marginBottom: "18px",
-            }}>
-              A pan-African body created by actuaries in Africa, for actuaries in Africa. Developing qualified professionals to meet the growing demands of the continent's financial industry. Operating in English and French.
-            </p>
-            <div style={{
-              fontFamily: "var(--font-mono)", fontSize: "8px",
-              color: "rgba(255,255,255,0.22)", letterSpacing: "0.16em",
-            }}>
-              PAN-AFRICAN REACH · ENGLISH AND FRENCH · FIRESIDE CHATS · MENTORSHIP
+              <div className="af-img-inner">
+                <Image
+                  src="/images/gain-qa.jpg"
+                  alt="Yeside Kazeem, Founder African Actuarial Development Academy"
+                  width={520} height={390} unoptimized
+                  style={{ width: "100%", height: "auto", display: "block" }}
+                />
+              </div>
             </div>
           </div>
 
-          <div className="flex flex-col gap-5">
-            {/* Mortality Table */}
-            <div className="africa-card" style={{
-              background: "#F0F4FF", padding: "26px",
-              borderRadius: "4px", borderLeft: "3px solid #1B3A6B", flex: 1, opacity: 0,
+          {/* Text */}
+          <div className="af-text flex-1">
+            <div className="af-label" style={{
+              fontFamily: "var(--font-mono)", fontSize: "11px",
+              color: "rgba(10,10,10,0.52)", letterSpacing: "0.2em",
+              marginBottom: "20px", opacity: 0,
             }}>
-              <div style={{
-                fontFamily: "var(--font-mono)", fontSize: "8px",
-                color: "#1B3A6B", letterSpacing: "0.2em", marginBottom: "8px",
-              }}>
-                MAKING HISTORY · 2024
-              </div>
-              <h3 style={{
-                fontFamily: "var(--font-cormorant)", fontSize: "19px",
-                fontWeight: 600, color: "#0A0A0A", marginBottom: "8px",
-              }}>
-                Nigeria's First Mortality Table
-              </h3>
+              AFRICA MISSION
+            </div>
+
+            <h2 className="af-headline" style={{
+              fontFamily: "var(--font-cormorant)",
+              fontSize: "clamp(32px, 4.5vw, 64px)",
+              fontWeight: 500, color: "#0A0A0A",
+              lineHeight: 1.04, marginBottom: "24px",
+              maxWidth: "500px", opacity: 0,
+            }}>
+              Building the profession the continent needs.
+            </h2>
+
+            <div className="af-body" style={{ opacity: 0 }}>
               <p style={{
-                fontFamily: "var(--font-dm)", fontSize: "12px",
-                color: "rgba(10,10,10,0.52)", lineHeight: 1.7,
+                fontFamily: "var(--font-dm)",
+                fontSize: "clamp(15px, 1.3vw, 17px)",
+                color: "rgba(10,10,10,0.82)",
+                lineHeight: 1.88, maxWidth: "460px",
+                marginBottom: "12px",
               }}>
-                Technical support to the NMTDC. A foundation the financial industry can build on for generations.
+                Africa does not just need more actuaries. It needs institutions,
+                pipelines, and data infrastructure that will sustain the profession
+                for generations.
+              </p>
+              <p style={{
+                fontFamily: "var(--font-dm)",
+                fontSize: "clamp(15px, 1.3vw, 17px)",
+                color: "rgba(10,10,10,0.82)",
+                lineHeight: 1.88, maxWidth: "460px",
+                marginBottom: "36px",
+              }}>
+                Yeside has spent her career building exactly that.
               </p>
             </div>
 
-            {/* Roles */}
-            <div className="africa-card" style={{
-              border: "1px solid rgba(27,58,107,0.12)",
-              padding: "26px", borderRadius: "4px", flex: 1, opacity: 0,
-            }}>
-              {[
-                { title: "COP30 — IAA Representative", sub: "Actuarial profession at the global stage" },
-                { title: "GAIN Ambassador", sub: "Global Actuarial Initiative" },
-                { title: "NAS — Former President", sub: "IAA full member status achieved" },
-              ].map((item, i) => (
-                <div key={i} className="flex gap-3 mb-4 last:mb-0">
-                  <div style={{
-                    width: "18px", height: "1px", background: "#1B3A6B",
-                    marginTop: "9px", flexShrink: 0,
-                  }} />
-                  <div>
-                    <div style={{ fontFamily: "var(--font-dm)", fontSize: "13px", fontWeight: 500, color: "#0A0A0A" }}>{item.title}</div>
-                    <div style={{ fontFamily: "var(--font-dm)", fontSize: "11px", color: "rgba(10,10,10,0.42)" }}>{item.sub}</div>
-                  </div>
-                </div>
-              ))}
+            <div className="af-ctas flex flex-wrap gap-4" style={{ opacity: 0 }}>
+              <a href={LINKEDIN} target="_blank" rel="noopener noreferrer" style={{
+                fontFamily: "var(--font-mono)", fontSize: "12px",
+                color: "#ffffff", letterSpacing: "0.16em",
+                textDecoration: "none",
+                background: "#1B3A6B",
+                border: "1px solid #1B3A6B",
+                padding: "13px 26px",
+                display: "inline-block",
+              }}>
+                LET'S BUILD TOGETHER →
+              </a>
+              <Link href="/about" style={{
+                fontFamily: "var(--font-mono)", fontSize: "12px",
+                color: "#1B3A6B", letterSpacing: "0.16em",
+                textDecoration: "none",
+                background: "transparent",
+                border: "1px solid #1B3A6B",
+                padding: "13px 26px",
+                display: "inline-block",
+              }}>
+                VIEW ACHIEVEMENTS →
+              </Link>
             </div>
           </div>
-        </div>
 
-        <a href={LINKEDIN} target="_blank" rel="noopener noreferrer" style={{
-          display: "inline-flex", alignItems: "center", gap: "10px",
-          fontFamily: "var(--font-mono)", fontSize: "10px", color: "#0A0A0A",
-          letterSpacing: "0.15em", borderBottom: "1px solid #0A0A0A",
-          paddingBottom: "3px", textDecoration: "none",
-        }}>
-          LET'S BUILD TOGETHER
-        </a>
+        </div>
       </div>
     </section>
   );
