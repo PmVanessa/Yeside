@@ -28,16 +28,12 @@ app/
   page.tsx              — Homepage (Hero → ProofSection → WhatSheDoes → AfricaSection → Contact)
   about/                — Achievements page
   journey/              — Career timeline (10 stops, London → Pan-Africa)
-  contact/              — Direct contact form
-  api/contact/          — Form handler (wire up to Resend / SendGrid)
-
 components/
   Hero.tsx              — Full-viewport white editorial hero
   ProofSection.tsx      — IBW flyer clip-path reveal + copy
   WhatSheDoes.tsx       — 3 editorial pillars (Board / Speaking / Africa)
   AfricaSection.tsx     — GAIN Q&A image + Africa mission copy
   Contact.tsx           — Dark footer with columns + coordinates
-  ContactForm.tsx       — Intent-based form with email capture
   Navigation.tsx        — Adaptive nav (white on home, dark on inner pages)
   SmoothScroll.tsx      — Lenis wrapper
 
@@ -55,16 +51,6 @@ data/
 npm install
 npm run dev        # http://localhost:3458
 ```
-
----
-
-## Contact form
-
-The form at `/contact` POSTs to `/api/contact/route.ts`. To wire up real email delivery:
-
-1. Install Resend: `npm install resend`
-2. Add `RESEND_API_KEY=re_...` to `.env.local`
-3. Uncomment the Resend block in `app/api/contact/route.ts`
 
 ---
 
