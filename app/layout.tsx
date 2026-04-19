@@ -65,7 +65,7 @@ export default function RootLayout({
       lang="en"
       className={`${cormorant.variable} ${dmSans.variable} ${spaceMono.variable}`}
     >
-      <body>
+      <body suppressHydrationWarning>
         <Navigation />
         <SmoothScroll>
           {children}
