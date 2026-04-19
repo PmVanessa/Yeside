@@ -63,3 +63,34 @@ body {
 .gsap-hidden {
   opacity: 0;
 }
+
+/* Focus-visible: keyboard users get a clear outline, mouse users don't */
+:focus {
+  outline: none;
+}
+:focus-visible {
+  outline: 2px solid #1B3A6B;
+  outline-offset: 3px;
+}
+/* On dark backgrounds, use a lighter focus ring */
+[style*="background: #080808"] :focus-visible,
+[style*="background: #0F1F3D"] :focus-visible {
+  outline-color: rgba(255, 255, 255, 0.8);
+}
+
+/* Respect prefers-reduced-motion — disable all transitions and animations */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  /* Force-show GSAP-hidden elements so content is visible without animation */
+  [style*="opacity: 0"],
+  .gsap-hidden {
+    opacity: 1 !important;
+  }
+}

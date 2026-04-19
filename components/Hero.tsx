@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import Image from "next/image";
 
-const LINKEDIN = "https://www.linkedin.com/in/yesidekazeem/";
+import { LINKEDIN } from "@/data/home";
 
 export function Hero() {
   const ref = useRef<HTMLDivElement>(null);

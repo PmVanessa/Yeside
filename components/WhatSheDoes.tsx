@@ -2,31 +2,7 @@
 
 import { useEffect, useRef } from "react";
 
-const LINKEDIN = "https://www.linkedin.com/in/yesidekazeem/";
-
-const pillars = [
-  {
-    num: "01",
-    label: "BOARD & GOVERNANCE",
-    headline: "Two decades of risk and governance at board level.",
-    body: "Independent Non-Executive Director at Tangerine Life Insurance, chairing the Enterprise Risk Management and Technical Committee. Board member of NCGC, the Federal Government-backed institution inaugurated by Vice President Kashim Shettima. Twenty years of P&L ownership, regulatory navigation, and strategic oversight.",
-    cta: "ENQUIRE ABOUT BOARD OPPORTUNITIES →",
-  },
-  {
-    num: "02",
-    label: "SPEAKING",
-    headline: "She speaks from experience, not theory.",
-    body: "From the IBW Women in Insurance Summit in London to the COP30 IAA delegation, from SCGN's 20th Annual Conference to the global actuview stage. Corporate governance, African financial systems, women in insurance leadership. The kind of session that changes what people think is possible.",
-    cta: "INVITE YESIDE TO SPEAK →",
-  },
-  {
-    num: "03",
-    label: "AFRICA MISSION",
-    headline: "Co-founder. Architect. Builder.",
-    body: "Co-founded the African Actuarial Development Academy, a pan-African body operating in English and French. Technical architect of Nigeria's first mortality table. As President of the Nigerian Actuarial Society, secured IAA Full Member Status for Nigeria, a historic first. Eight markets. One direction.",
-    cta: "PARTNER ON THE AFRICA MISSION →",
-  },
-];
+import { LINKEDIN, pillars } from "@/data/home";
 
 export function WhatSheDoes() {
   const ref = useRef<HTMLDivElement>(null);
@@ -91,7 +67,7 @@ export function WhatSheDoes() {
               <div className={`wsd-content-${i}`} style={{ opacity: 0 }}>
                 {/* Small number */}
                 <div className={`wsd-num-${i}`} style={{
-                  fontFamily: "var(--font-mono)", fontSize: "11px",
+                  fontFamily: "var(--font-mono)", fontSize: "12px",
                   color: "rgba(10,10,10,0.55)", letterSpacing: "0.2em",
                   marginBottom: "8px", opacity: 0,
                 }}>
@@ -99,7 +75,7 @@ export function WhatSheDoes() {
                 </div>
 
                 <div style={{
-                  fontFamily: "var(--font-mono)", fontSize: "11px",
+                  fontFamily: "var(--font-mono)", fontSize: "12px",
                   color: "rgba(10,10,10,0.68)", letterSpacing: "0.2em",
                   marginBottom: "20px",
                 }}>
@@ -124,7 +100,7 @@ export function WhatSheDoes() {
                 </p>
 
                 <a href={LINKEDIN} target="_blank" rel="noopener noreferrer" style={{
-                  fontFamily: "var(--font-mono)", fontSize: "11px",
+                  fontFamily: "var(--font-mono)", fontSize: "12px",
                   color: "#ffffff", letterSpacing: "0.14em",
                   textDecoration: "none",
                   background: "#1B3A6B",

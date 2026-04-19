@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import Link from "next/link";
 
-const LINKEDIN = "https://www.linkedin.com/in/yesidekazeem/";
+import { LINKEDIN, contactColumns } from "@/data/home";
 
 export function Contact() {
   const ref = useRef<HTMLDivElement>(null);
@@ -103,26 +103,10 @@ export function Contact() {
         className="grid grid-cols-1 md:grid-cols-3 gap-10 py-16 border-t border-b"
         style={{ borderColor: "rgba(255,255,255,0.06)" }}
       >
-        {[
-          {
-            label: "SPEAKING",
-            lines: ["Keynotes. Panels. Summits.", "Corporate governance.", "African financial systems.", "Women in leadership."],
-            cta: "INVITE TO SPEAK →",
-          },
-          {
-            label: "BOARD & ADVISORY",
-            lines: ["Independent Non-Executive Director.", "Risk. Governance.", "Strategic oversight."],
-            cta: "BOARD ENQUIRIES →",
-          },
-          {
-            label: "AFRICA MISSION",
-            lines: ["AADA collaboration.", "Actuarial capacity building.", "Pan-African partnerships."],
-            cta: "GET IN TOUCH →",
-          },
-        ].map((col, i) => (
+        {contactColumns.map((col, i) => (
           <div key={i} className="ct-col" style={{ opacity: 0 }}>
             <div style={{
-              fontFamily: "var(--font-mono)", fontSize: "11px",
+              fontFamily: "var(--font-mono)", fontSize: "12px",
               color: "rgba(255,255,255,0.6)", letterSpacing: "0.2em",
               marginBottom: "18px",
             }}>
@@ -139,7 +123,7 @@ export function Contact() {
               ))}
             </div>
             <a href={LINKEDIN} target="_blank" rel="noopener noreferrer" style={{
-              fontFamily: "var(--font-mono)", fontSize: "11px",
+              fontFamily: "var(--font-mono)", fontSize: "12px",
               color: "#ffffff", letterSpacing: "0.14em",
               textDecoration: "none",
               background: "#1B3A6B",
@@ -157,7 +141,7 @@ export function Contact() {
       <div className="ct-bottom flex flex-col md:flex-row md:items-end justify-between gap-6" style={{ opacity: 0 }}>
         <div>
           <div style={{
-            fontFamily: "var(--font-mono)", fontSize: "11px",
+            fontFamily: "var(--font-mono)", fontSize: "12px",
             color: "rgba(255,255,255,0.6)", letterSpacing: "0.2em",
             marginBottom: "10px",
           }}>
@@ -171,7 +155,7 @@ export function Contact() {
             linkedin.com/in/yesidekazeem
           </a>
           <Link href="/journey" style={{
-            fontFamily: "var(--font-mono)", fontSize: "11px",
+            fontFamily: "var(--font-mono)", fontSize: "12px",
             color: "#ffffff", letterSpacing: "0.15em",
             textDecoration: "none", display: "inline-block",
             background: "#1B3A6B",
@@ -183,7 +167,7 @@ export function Contact() {
         </div>
 
         <div style={{
-          fontFamily: "var(--font-mono)", fontSize: "11px",
+          fontFamily: "var(--font-mono)", fontSize: "12px",
           color: "rgba(255,255,255,0.5)", letterSpacing: "0.1em",
           textAlign: "right", lineHeight: 1.85,
         }}>

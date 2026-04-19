@@ -1,36 +1,85 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Yeside Kazeem — Portfolio
 
-## Getting Started
+Personal portfolio for **Yeside Kazeem FIA, FNAS** — entrepreneurial actuary, board director, and institution-builder operating across London and Africa.
 
-First, run the development server:
+Live: [yesidekazeem.com](https://yesidekazeem.com)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+---
+
+## Stack
+
+| Tool | Purpose |
+|------|---------|
+| Next.js 15 (App Router) | Framework, routing, SSR metadata |
+| GSAP + ScrollTrigger | Scroll-driven animations, clip-path reveals, parallax |
+| Lenis | Smooth scroll (disabled automatically for `prefers-reduced-motion`) |
+| Tailwind CSS v4 | Utility classes |
+| TypeScript | Full type safety |
+| Vercel | Deployment |
+
+**Fonts:** Cormorant Garamond (editorial), DM Sans (body), Space Mono (monospace accents / coordinates)
+
+---
+
+## Project structure
+
+```
+app/
+  page.tsx              — Homepage (Hero → ProofSection → WhatSheDoes → AfricaSection → Contact)
+  about/                — Achievements page
+  journey/              — Career timeline (10 stops, London → Pan-Africa)
+  contact/              — Direct contact form
+  api/contact/          — Form handler (wire up to Resend / SendGrid)
+
+components/
+  Hero.tsx              — Full-viewport white editorial hero
+  ProofSection.tsx      — IBW flyer clip-path reveal + copy
+  WhatSheDoes.tsx       — 3 editorial pillars (Board / Speaking / Africa)
+  AfricaSection.tsx     — GAIN Q&A image + Africa mission copy
+  Contact.tsx           — Dark footer with columns + coordinates
+  ContactForm.tsx       — Intent-based form with email capture
+  Navigation.tsx        — Adaptive nav (white on home, dark on inner pages)
+  SmoothScroll.tsx      — Lenis wrapper
+
+data/
+  journey.ts            — 10 career stops (year, org, role, impact, logo)
+  about.ts              — 5 achievements + credentials + stats strip
+  home.ts               — Pillars, contact columns, shared constants (LINKEDIN, EMAIL)
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Getting started
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm install
+npm run dev        # http://localhost:3458
+```
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## Contact form
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The form at `/contact` POSTs to `/api/contact/route.ts`. To wire up real email delivery:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Install Resend: `npm install resend`
+2. Add `RESEND_API_KEY=re_...` to `.env.local`
+3. Uncomment the Resend block in `app/api/contact/route.ts`
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Content updates
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+All copy lives in `data/` — no need to touch page components for content changes:
+
+- **Career timeline:** `data/journey.ts`
+- **Achievements:** `data/about.ts`
+- **Homepage pillars / contact columns:** `data/home.ts`
+
+---
+
+## Accessibility
+
+- `prefers-reduced-motion`: Lenis disabled, all CSS transitions suppressed, GSAP-hidden elements forced visible
+- `focus-visible`: keyboard users get a `#1B3A6B` outline; mouse users see none
+- All CTAs are 12–13px minimum, bordered for clear tap targets

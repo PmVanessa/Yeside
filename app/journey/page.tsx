@@ -1,156 +1,18 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-
-const stops = [
-  {
-    year: "2004",
-    city: "LONDON",
-    country: "UNITED KINGDOM",
-    coords: "51.5074°N, 0.1278°W",
-    org: "Deloitte UK",
-    role: "Manager, Actuarial",
-    impact: "Pensions, investment and life assurance. Valuation, M&A, audit support across major UK clients.",
-    logo: "https://images.seeklogo.com/logo-png/21/1/deloitte-logo-png_seeklogo-218990.png",
-    logoWidth: 240,
-    logoHeight: 44,
-    bg: "#080808",
-    accent: "#86BC25",
-  },
-  {
-    year: "2014",
-    city: "LAGOS",
-    country: "NIGERIA",
-    coords: "6.5244°N, 3.3792°E",
-    org: "Old Mutual Nigeria",
-    role: "Actuarial Executive",
-    impact: "Life assurance and building Nigeria's early actuarial practice. Laying the groundwork for a generation of actuaries.",
-    logo: "https://companieslogo.com/img/orig/OMU.JO_BIG-5d5b6185.png?t=1720244493",
-    logoWidth: 260,
-    logoHeight: 60,
-    bg: "#0F1F3D",
-    accent: "#00A3A1",
-  },
-  {
-    year: "2016",
-    city: "NAIROBI",
-    country: "KENYA",
-    coords: "1.2921°S, 36.8219°E",
-    org: "Prudential Africa",
-    role: "Senior Business Development",
-    impact: "Designed and deployed the Enterprise Risk Framework across eight African markets: Kenya, Ghana, Nigeria, Uganda, Zambia, Cameroon, Togo, Côte d'Ivoire.",
-    logo: "https://prudential.co.ke/wp-content/uploads/2017/11/big-logo-1x.png",
-    logoWidth: 220,
-    logoHeight: 60,
-    bg: "#080808",
-    accent: "#E3000F",
-  },
-  {
-    year: "2017",
-    city: "LAGOS",
-    country: "NIGERIA",
-    coords: "6.5244°N, 3.3792°E",
-    org: "Nigerian Actuarial Society",
-    role: "President",
-    impact: "Achieved IAA full member status, a milestone in the history of Nigerian actuarial practice. Exponential membership growth during tenure.",
-    logo: "https://api.actuview.com/cache/3d066fb479c22aa8daa91e1d32a1bff0.webp",
-    logoWidth: 200,
-    logoHeight: 100,
-    bg: "#0F1F3D",
-    accent: "#1B3A6B",
-  },
-  {
-    year: "2019",
-    city: "DOUALA",
-    country: "CAMEROON",
-    coords: "4.0511°N, 9.7679°E",
-    org: "Prudential Beneficial Group",
-    role: "Group CRO & Chief Actuary",
-    impact: "Built the risk architecture across Cameroon, Togo, and Côte d'Ivoire. Operating in French and English across West and Central Africa.",
-    logo: "https://prudential.co.ke/wp-content/uploads/2017/11/big-logo-1x.png",
-    logoWidth: 220,
-    logoHeight: 60,
-    bg: "#080808",
-    accent: "#E3000F",
-  },
-  {
-    year: "2020",
-    city: "DOUALA",
-    country: "CAMEROON",
-    coords: "4.0511°N, 9.7679°E",
-    org: "Prudential Beneficial General",
-    role: "Managing Director",
-    impact: "Led the 2nd fastest growing non-life insurance firm in Cameroon. 40% revenue growth in 2021. CEO-level P&L ownership across two markets.",
-    logo: "https://prudential.co.ke/wp-content/uploads/2017/11/big-logo-1x.png",
-    logoWidth: 220,
-    logoHeight: 60,
-    bg: "#0F1F3D",
-    accent: "#E3000F",
-  },
-  {
-    year: "2022",
-    city: "GLOBAL",
-    country: "CONTINENTAL AFRICA",
-    coords: "CONTINENTAL",
-    org: "International Actuarial Association",
-    role: "Vice Chair, Africa Subcommittee",
-    impact: "Continental actuarial development at global scale. Representing Africa's actuarial interests on the world stage.",
-    logo: "https://actuaries.org/app/uploads/2024/12/IAA_Horizontal_RGB.png",
-    logoWidth: 260,
-    logoHeight: 60,
-    bg: "#080808",
-    accent: "#004B87",
-  },
-  {
-    year: "2023",
-    city: "LAGOS",
-    country: "NIGERIA",
-    coords: "6.5244°N, 3.3792°E",
-    org: "Tangerine Life Insurance",
-    role: "Independent Non-Executive Director",
-    impact: "Chairs the Enterprise Risk Management and Technical Committee. Serves on Audit and Remuneration Committees.",
-    logo: "/images/logos/tangerine.svg",
-    logoWidth: 220,
-    logoHeight: 60,
-    bg: "#0F1F3D",
-    accent: "#FF6B2C",
-  },
-  {
-    year: "2024",
-    city: "LONDON",
-    country: "PAN-AFRICAN",
-    coords: "CONTINENTAL",
-    org: "African Actuarial Development Academy",
-    role: "Co-Founder",
-    impact: "A pan-African body created by actuaries in Africa, for actuaries in Africa. Developing the next generation of qualified professionals in English and French.",
-    logo: "https://api.actuview.com/cache/94179148dc69024b324e34e0509427e2.webp",
-    logoWidth: 200,
-    logoHeight: 100,
-    bg: "#080808",
-    accent: "#1B3A6B",
-  },
-  {
-    year: "2025",
-    city: "ABUJA",
-    country: "NIGERIA",
-    coords: "9.0765°N, 7.3986°E",
-    org: "NCGC",
-    role: "Independent Non-Executive Director",
-    impact: "FG-backed institution unlocking MSME financing across Nigeria. Inaugurated by VP Kashim Shettima. Board level oversight of credit guarantee operations.",
-    logo: "https://ncgc.ng/wp-content/uploads/2025/05/Logo-as-at-15th-May-2025.png",
-    logoWidth: 220,
-    logoHeight: 80,
-    bg: "#0F1F3D",
-    accent: "#008751",
-  },
-];
+import { stops } from "@/data/journey";
 
 export default function JourneyPage() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [activeStop, setActiveStop] = useState(0);
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
   useEffect(() => {
+    const ctxs: { revert: () => void }[] = [];
+
     async function init() {
       const { gsap } = await import("gsap");
       const { ScrollTrigger } = await import("gsap/ScrollTrigger");
@@ -168,17 +30,27 @@ export default function JourneyPage() {
             { opacity: 1, y: 0, duration: 0.8, ease: "power2.out", delay: 0.15,
               scrollTrigger: { trigger: `.stop-section-${i}`, start: "top 60%" } }
           );
+          // Track active stop for mobile nav
+          ScrollTrigger.create({
+            trigger: `.stop-section-${i}`,
+            start: "top 50%",
+            end: "bottom 50%",
+            onEnter: () => setActiveStop(i),
+            onEnterBack: () => setActiveStop(i),
+          });
         });
-        return () => ctx.revert();
+        ctxs.push(ctx);
       });
     }
+
     init();
+    return () => ctxs.forEach(ctx => ctx.revert());
   }, []);
 
   return (
     <main ref={containerRef} style={{ background: "#080808" }}>
 
-      {/* Stop dot navigation ·right side */}
+      {/* Desktop dot navigation — right side */}
       <div className="hidden md:flex fixed right-6 top-1/2 z-50 flex-col gap-3"
         style={{ transform: "translateY(-50%)" }}>
         {stops.map((s, i) => (
@@ -188,12 +60,57 @@ export default function JourneyPage() {
             title={`${s.year} · ${s.org}`}
             style={{
               display: "block", width: "6px", height: "6px", borderRadius: "50%",
-              background: "rgba(255,255,255,0.25)", transition: "background 0.2s",
+              background: activeStop === i ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.25)",
+              transition: "background 0.2s",
             }}
             onMouseEnter={e => (e.currentTarget.style.background = "rgba(255,255,255,0.8)")}
-            onMouseLeave={e => (e.currentTarget.style.background = "rgba(255,255,255,0.25)")}
+            onMouseLeave={e => (e.currentTarget.style.background = activeStop === i ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.25)")}
           />
         ))}
+      </div>
+
+      {/* Mobile sticky year indicator */}
+      <div className="md:hidden fixed bottom-6 left-1/2 z-50 flex items-center gap-3"
+        style={{ transform: "translateX(-50%)" }}>
+        <button
+          onClick={() => setMobileNavOpen(v => !v)}
+          style={{
+            fontFamily: "var(--font-mono)", fontSize: "12px",
+            color: "#ffffff", letterSpacing: "0.16em",
+            background: "rgba(27,58,107,0.95)",
+            border: "1px solid rgba(255,255,255,0.2)",
+            padding: "10px 20px",
+            cursor: "pointer",
+            backdropFilter: "blur(8px)",
+          }}
+        >
+          {stops[activeStop]?.year} · {stops[activeStop]?.city} ↑
+        </button>
+        {mobileNavOpen && (
+          <div style={{
+            position: "absolute", bottom: "100%", left: "50%",
+            transform: "translateX(-50%)", marginBottom: "8px",
+            background: "rgba(8,8,8,0.97)", border: "1px solid rgba(255,255,255,0.1)",
+            padding: "8px 0", backdropFilter: "blur(12px)", minWidth: "220px",
+          }}>
+            {stops.map((s, i) => (
+              <a
+                key={i}
+                href={`#stop-${i}`}
+                onClick={() => setMobileNavOpen(false)}
+                style={{
+                  display: "block", padding: "10px 20px",
+                  fontFamily: "var(--font-mono)", fontSize: "12px",
+                  color: activeStop === i ? "#ffffff" : "rgba(255,255,255,0.55)",
+                  letterSpacing: "0.14em", textDecoration: "none",
+                  background: activeStop === i ? "rgba(27,58,107,0.5)" : "transparent",
+                }}
+              >
+                {s.year} · {s.org}
+              </a>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Stops */}
@@ -253,11 +170,7 @@ export default function JourneyPage() {
                     alt={stop.org}
                     width={stop.logoWidth}
                     height={stop.logoHeight}
-                    style={{
-                      maxWidth: "100%",
-                      height: "auto",
-                      objectFit: "contain",
-                    }}
+                    style={{ maxWidth: "100%", height: "auto", objectFit: "contain" }}
                     unoptimized
                   />
                 </div>
@@ -265,57 +178,46 @@ export default function JourneyPage() {
 
               {/* Text side */}
               <div className={`stop-content-${i} flex-1`} style={{ opacity: 0 }}>
-                {/* City · Year */}
                 <div style={{
-                  fontFamily: "var(--font-mono)", fontSize: "11px",
-                  color: "rgba(255,255,255,0.55)", letterSpacing: "0.18em", marginBottom: "6px",
+                  fontFamily: "var(--font-mono)", fontSize: "13px",
+                  color: "rgba(255,255,255,0.62)", letterSpacing: "0.16em", marginBottom: "6px",
                 }}>
                   {stop.city} · {stop.country}
                 </div>
-                {/* Coords */}
                 <div style={{
-                  fontFamily: "var(--font-mono)", fontSize: "11px",
+                  fontFamily: "var(--font-mono)", fontSize: "12px",
                   color: "rgba(255,255,255,0.45)", letterSpacing: "0.12em", marginBottom: "20px",
                 }}>
                   {stop.coords} · {stop.year}
                 </div>
 
-                {/* Org name */}
                 <h2 style={{
                   fontFamily: "var(--font-cormorant)",
                   fontSize: "clamp(36px, 5.5vw, 72px)",
-                  fontWeight: 600,
-                  color: "#ffffff",
-                  lineHeight: 1.05,
-                  marginBottom: "16px",
-                  maxWidth: "640px",
+                  fontWeight: 600, color: "#ffffff",
+                  lineHeight: 1.05, marginBottom: "16px", maxWidth: "640px",
                 }}>
                   {stop.org}
                 </h2>
 
-                {/* Role */}
                 <div style={{
-                  fontFamily: "var(--font-mono)", fontSize: "11px",
+                  fontFamily: "var(--font-mono)", fontSize: "13px",
                   color: stop.accent, letterSpacing: "0.16em", marginBottom: "24px",
                   textTransform: "uppercase",
                 }}>
                   {stop.role}
                 </div>
 
-                {/* Divider */}
                 <div style={{ width: "40px", height: "1px", background: "rgba(255,255,255,0.15)", marginBottom: "24px" }} />
 
-                {/* Impact */}
                 <p style={{
                   fontFamily: "var(--font-dm)",
                   fontSize: "clamp(15px, 1.3vw, 18px)",
                   color: "rgba(255,255,255,0.82)",
-                  lineHeight: 1.8,
-                  maxWidth: "520px",
+                  lineHeight: 1.8, maxWidth: "520px",
                 }}>
                   {stop.impact}
                 </p>
-
               </div>
             </div>
           </div>
@@ -343,11 +245,9 @@ export default function JourneyPage() {
         </div>
         <Link href="/" style={{
           display: "inline-flex", alignItems: "center", gap: "10px",
-          fontFamily: "var(--font-mono)", fontSize: "12px", color: "#ffffff",
+          fontFamily: "var(--font-mono)", fontSize: "13px", color: "#ffffff",
           letterSpacing: "0.16em", textDecoration: "none", flexShrink: 0,
-          background: "#1B3A6B",
-          border: "1px solid #1B3A6B",
-          padding: "13px 26px",
+          background: "#1B3A6B", border: "1px solid #1B3A6B", padding: "13px 26px",
         }}>
           ← BACK TO PROFILE
         </Link>

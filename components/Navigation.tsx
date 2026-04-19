@@ -7,7 +7,7 @@ const links = [
   { label: "HOME", href: "/" },
   { label: "ABOUT", href: "/about" },
   { label: "WORK", href: "/journey" },
-  { label: "CONTACT", href: "/#contact" },
+  { label: "CONTACT", href: "/contact" },
 ];
 
 export function Navigation() {
@@ -56,7 +56,7 @@ export function Navigation() {
                 href={link.href}
                 style={{
                   fontFamily: "var(--font-mono)",
-                  fontSize: "11px",
+                  fontSize: "13px",
                   letterSpacing: "0.2em",
                   color: isActive ? activeColor : inactiveColor,
                   textDecoration: "none",

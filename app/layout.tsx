@@ -24,13 +24,36 @@ const spaceMono = Space_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Yeside Kazeem FIA, FNAS · Actuary. Builder. Board Director.",
+  metadataBase: new URL("https://yesidekazeem.com"),
+  title: {
+    default: "Yeside Kazeem FIA, FNAS · Actuary. Builder. Board Director.",
+    template: "%s · Yeside Kazeem",
+  },
   description:
     "Entrepreneurial actuary and institution-builder operating across London and Africa. Board Advisory · Speaking · Africa Mission.",
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     title: "Yeside Kazeem FIA, FNAS",
     description: "Entrepreneurial actuary. Building what Africa's financial future needs.",
     type: "website",
+    url: "https://yesidekazeem.com",
+    siteName: "Yeside Kazeem",
+    images: [
+      {
+        url: "/images/yeside-hero.jpg",
+        width: 460,
+        height: 540,
+        alt: "Yeside Kazeem FIA FNAS — Actuary, Board Director, Co-Founder",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Yeside Kazeem FIA, FNAS",
+    description: "Entrepreneurial actuary. Building what Africa's financial future needs.",
+    images: ["/images/yeside-hero.jpg"],
   },
 };
 

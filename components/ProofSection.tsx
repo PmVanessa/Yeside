@@ -88,13 +88,13 @@ export function ProofSection() {
                 <Image
                   src="/images/flyer-ibw.jpg"
                   alt="IBW Women in Insurance Summit, Featured Speaker Yeside Kazeem"
-                  width={380} height={285} unoptimized
+                  width={380} height={285}
                   style={{ width: "100%", height: "auto", display: "block" }}
                 />
               </div>
             </div>
             <div className="proof-caption" style={{
-              fontFamily: "var(--font-mono)", fontSize: "11px",
+              fontFamily: "var(--font-mono)", fontSize: "12px",
               color: "rgba(10,10,10,0.52)", letterSpacing: "0.16em",
               marginTop: "14px", lineHeight: 1.7, opacity: 0,
             }}>
@@ -106,7 +106,7 @@ export function ProofSection() {
           {/* Copy */}
           <div className="proof-copy flex-1">
             <div className="proof-label" style={{
-              fontFamily: "var(--font-mono)", fontSize: "11px",
+              fontFamily: "var(--font-mono)", fontSize: "12px",
               color: "rgba(10,10,10,0.52)", letterSpacing: "0.2em",
               marginBottom: "24px", opacity: 0,
             }}>

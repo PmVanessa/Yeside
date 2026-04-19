@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-const LINKEDIN = "https://www.linkedin.com/in/yesidekazeem/";
+import { LINKEDIN } from "@/data/home";
 
 export function AfricaSection() {
   const ref = useRef<HTMLDivElement>(null);
@@ -85,7 +85,7 @@ export function AfricaSection() {
                 <Image
                   src="/images/gain-qa.jpg"
                   alt="Yeside Kazeem, Founder African Actuarial Development Academy"
-                  width={520} height={390} unoptimized
+                  width={520} height={390}
                   style={{ width: "100%", height: "auto", display: "block" }}
                 />
               </div>
@@ -95,7 +95,7 @@ export function AfricaSection() {
           {/* Text */}
           <div className="af-text flex-1">
             <div className="af-label" style={{
-              fontFamily: "var(--font-mono)", fontSize: "11px",
+              fontFamily: "var(--font-mono)", fontSize: "12px",
               color: "rgba(10,10,10,0.52)", letterSpacing: "0.2em",
               marginBottom: "20px", opacity: 0,
             }}>
@@ -145,7 +145,7 @@ export function AfricaSection() {
                 padding: "13px 26px",
                 display: "inline-block",
               }}>
-                LET'S BUILD TOGETHER →
+                LET&apos;S BUILD TOGETHER →
               </a>
               <Link href="/about" style={{
                 fontFamily: "var(--font-mono)", fontSize: "12px",
