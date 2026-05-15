@@ -1,5 +1,5 @@
 export const LINKEDIN = "https://www.linkedin.com/in/yesidekazeem/";
-export const EMAIL = "yeside@yesidekazeem.com";
+export const EMAIL = "yesidekazeem@yahoo.co.uk"; // kept for reference, not displayed
 
 export interface Pillar {
   num: string;
@@ -14,7 +14,7 @@ export const pillars: Pillar[] = [
     num: "01",
     label: "BOARD & GOVERNANCE",
     headline: "Two decades of risk and governance at board level.",
-    body: "Independent Non-Executive Director at Tangerine Life Insurance, chairing the Enterprise Risk Management and Technical Committee. Board member of NCGC, the Federal Government-backed institution inaugurated by Vice President Kashim Shettima. Twenty years of P&L ownership, regulatory navigation, and strategic oversight.",
+    body: "Independent Non-Executive Director at Tangerine Life Insurance, chairing the Enterprise Risk Management and Technical Committee. Board member of NCGC, the Federal Government-backed institution inaugurated by Vice President Kashim Shettima. Governor of the Corporation of East Surrey College. Twenty years of P&L ownership, regulatory navigation, and strategic oversight.",
     cta: "ENQUIRE ABOUT BOARD OPPORTUNITIES →",
   },
   {
@@ -28,7 +28,7 @@ export const pillars: Pillar[] = [
     num: "03",
     label: "AFRICA MISSION",
     headline: "Co-founder. Architect. Builder.",
-    body: "Co-founded the African Actuarial Development Academy, a pan-African body operating in English and French. Technical architect of Nigeria's first mortality table. As President of the Nigerian Actuarial Society, secured IAA Full Member Status for Nigeria, a historic first. Eight markets. One direction.",
+    body: "Co-founded the African Actuarial Development Academy, a pan-African body operating in English and French. Leads the GAIN initiative — a UNDP/Milliman partnership transforming actuarial supply and demand across Nigeria. Technical architect of Nigeria's first mortality table. Secured IAA Full Member Status for the Nigerian Actuarial Society, a historic first. Eight markets. One direction.",
     cta: "PARTNER ON THE AFRICA MISSION →",
   },
 ];

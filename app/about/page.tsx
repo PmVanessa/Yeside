@@ -89,7 +89,7 @@ export default function AboutPage() {
 
       {/* Numbers strip */}
       <div className="px-6 md:px-16 py-12" style={{ borderBottom: "1px solid rgba(255,255,255,0.06)", background: "#0F1F3D" }}>
-        <div className="grid grid-cols-2 md:grid-cols-6 gap-8">
+        <div className="grid grid-cols-3 md:grid-cols-6 gap-8">
           {statsStrip.map((s, i) => (
             <div key={i}>
               <div style={{

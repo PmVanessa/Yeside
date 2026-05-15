@@ -14,11 +14,11 @@ export const achievements: Achievement[] = [
     index: "01",
     tag: "INSTITUTION BUILDER",
     headline: "Building the infrastructure Africa's actuarial profession needed.",
-    body: "Co-founded the African Actuarial Development Academy, a pan-African body created by actuaries in Africa, for actuaries in Africa. Operating in English and French across the continent. Provided technical support for Nigeria's first-ever mortality table. As President of the Nigerian Actuarial Society, secured IAA Full Member Status for Nigeria, a historic milestone.",
+    body: "Co-founded the African Actuarial Development Academy — the pan-African body built by actuaries in Africa, for Africa, operating in English and French. As President of the Nigerian Actuarial Society, secured IAA Full Member Status for Nigeria, a historic first. Now Technical Lead of Nigeria's inaugural Mortality Table, and Chair of the NAS/NAICOM Discount Rate Committee — the body whose monthly risk-free yield curve every Nigerian insurer uses for IFRS 17. She doesn't just work in the profession. She sets its standards.",
     stats: [
       { value: "1st", label: "Mortality table in Nigeria" },
       { value: "IAA", label: "Full membership secured" },
-      { value: "2024", label: "AADA co-founded" },
+      { value: "IFRS 17", label: "Discount rate she sets" },
     ],
     bg: "#080808",
   },
@@ -26,9 +26,9 @@ export const achievements: Achievement[] = [
     index: "02",
     tag: "BOARD DIRECTOR",
     headline: "Risk. Governance. Strategic oversight at the highest level.",
-    body: "Currently serving as Independent Non-Executive Director at Tangerine Life Insurance, chairing the Enterprise Risk Management and Technical Committee, and on Audit and Remuneration Committees. Serves on the inaugural board of NCGC, the Federal Government-backed institution unlocking MSME financing across Nigeria, inaugurated by Vice President Kashim Shettima.",
+    body: "Independent Non-Executive Director at Tangerine Life Insurance (chairing ERM & Technical Committee) and at NCGC, the Federal Government-backed institution unlocking MSME financing inaugurated by Vice President Kashim Shettima. Governor of the Corporation of East Surrey College. Three active governance seats across financial services and education.",
     stats: [
-      { value: "2", label: "Active board seats" },
+      { value: "3", label: "Active board seats" },
       { value: "FG", label: "Backed institution" },
       { value: "ERM", label: "Committee chair" },
     ],
@@ -74,7 +74,7 @@ export const achievements: Achievement[] = [
 
 export const statsStrip = [
   { n: "20+", l: "YEARS" },
-  { n: "10", l: "ROLES" },
+  { n: "12+", l: "ROLES" },
   { n: "8", l: "MARKETS" },
   { n: "3", l: "COUNTRIES" },
   { n: "2", l: "CONTINENTS" },

@@ -54,7 +54,7 @@ export function WhatSheDoes() {
       <div className="px-6 md:px-16 py-20 lg:py-28">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16">
           {pillars.map((p, i) => (
-            <div key={i} className={`wsd-pillar-${i}`}>
+            <div key={i} className={`wsd-pillar-${i}`} style={{ display: "flex", flexDirection: "column" }}>
               {/* Animated top border */}
               <div className={`wsd-top-${i}`} style={{
                 height: "1px",
@@ -62,9 +62,10 @@ export function WhatSheDoes() {
                 transformOrigin: "left center",
                 transform: "scaleX(0)",
                 marginBottom: "20px",
+                flexShrink: 0,
               }} />
 
-              <div className={`wsd-content-${i}`} style={{ opacity: 0 }}>
+              <div className={`wsd-content-${i}`} style={{ opacity: 0, display: "flex", flexDirection: "column", flex: 1 }}>
                 {/* Small number */}
                 <div className={`wsd-num-${i}`} style={{
                   fontFamily: "var(--font-mono)", fontSize: "12px",
@@ -94,7 +95,7 @@ export function WhatSheDoes() {
                 <p style={{
                   fontFamily: "var(--font-dm)", fontSize: "15px",
                   color: "rgba(10,10,10,0.82)", lineHeight: 1.82,
-                  marginBottom: "28px",
+                  marginBottom: "28px", flex: 1,
                 }}>
                   {p.body}
                 </p>
@@ -107,6 +108,7 @@ export function WhatSheDoes() {
                   border: "1px solid #1B3A6B",
                   padding: "11px 20px",
                   display: "inline-block",
+                  alignSelf: "flex-start",
                 }}>
                   {p.cta}
                 </a>

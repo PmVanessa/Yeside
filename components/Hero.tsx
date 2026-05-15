@@ -56,11 +56,11 @@ export function Hero() {
       className="relative w-full min-h-screen flex items-center overflow-hidden"
       style={{ background: "#ffffff" }}
     >
-      <div className="w-full px-6 md:px-16 pt-24 pb-16">
-        <div className="flex flex-col lg:flex-row lg:items-center">
+      <div className="w-full px-6 md:px-16 pt-28 pb-16">
+        <div className="flex flex-col lg:flex-row lg:items-center gap-12 lg:gap-16">
 
           {/* Text */}
-          <div className="yk-names flex-1 lg:pr-10">
+          <div className="yk-names flex-1">
             <div style={{ overflow: "hidden" }}>
               <div className="yk-n1" style={{
                 fontFamily: "var(--font-cormorant)",
@@ -145,13 +145,13 @@ export function Hero() {
           </div>
 
           {/* Photo */}
-          <div className="yk-photo flex-shrink-0 mt-12 lg:mt-0" style={{
-            width: "clamp(220px, 34vw, 460px)", opacity: 0,
+          <div className="yk-photo flex-shrink-0" style={{
+            width: "clamp(260px, 36vw, 500px)", opacity: 0,
           }}>
             <Image
               src="/images/yeside-hero.jpg"
               alt="Yeside Kazeem FIA FNAS"
-              width={460} height={540} priority
+              width={500} height={667} priority
               style={{ width: "100%", height: "auto", display: "block" }}
             />
           </div>

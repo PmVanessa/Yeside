@@ -104,7 +104,7 @@ export function Contact() {
         style={{ borderColor: "rgba(255,255,255,0.06)" }}
       >
         {contactColumns.map((col, i) => (
-          <div key={i} className="ct-col" style={{ opacity: 0 }}>
+          <div key={i} className="ct-col" style={{ opacity: 0, display: "flex", flexDirection: "column" }}>
             <div style={{
               fontFamily: "var(--font-mono)", fontSize: "12px",
               color: "rgba(255,255,255,0.6)", letterSpacing: "0.2em",
@@ -112,7 +112,7 @@ export function Contact() {
             }}>
               {col.label}
             </div>
-            <div style={{ marginBottom: "24px" }}>
+            <div style={{ marginBottom: "24px", flex: 1 }}>
               {col.lines.map((line, j) => (
                 <div key={j} style={{
                   fontFamily: "var(--font-dm)", fontSize: "14px",
@@ -130,6 +130,7 @@ export function Contact() {
               border: "1px solid #1B3A6B",
               padding: "11px 20px",
               display: "inline-block",
+              alignSelf: "flex-start",
             }}>
               {col.cta}
             </a>
