@@ -20,7 +20,7 @@ export const pillars: Pillar[] = [
   {
     num: "02",
     label: "SPEAKING",
-    headline: "She speaks from experience, not theory.",
+    headline: "I speak from experience, not theory.",
     body: "From the IBW Women in Insurance Summit in London to the COP30 IAA delegation, from SCGN's 20th Annual Conference to the global actuview stage. Corporate governance, African financial systems, women in insurance leadership. The kind of session that changes what people think is possible.",
     cta: "INVITE YESIDE TO SPEAK →",
   },

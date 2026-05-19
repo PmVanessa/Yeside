@@ -131,7 +131,7 @@ export function AfricaSection() {
                 lineHeight: 1.88, maxWidth: "460px",
                 marginBottom: "36px",
               }}>
-                Yeside has spent her career building exactly that.
+                I&apos;ve spent my career building exactly that.
               </p>
             </div>
 

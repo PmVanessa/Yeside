@@ -82,19 +82,9 @@ export function Contact() {
           fontStyle: "italic", fontWeight: 300,
           color: "rgba(255,255,255,0.78)",
           maxWidth: "480px", lineHeight: 1.5,
-          marginBottom: "8px", opacity: 0,
+          marginBottom: "0", opacity: 0,
         }}>
           Building what matters, wherever it needs to be built.
-        </p>
-
-        <p className="ct-tag" style={{
-          fontFamily: "var(--font-cormorant)",
-          fontSize: "clamp(16px, 1.6vw, 21px)",
-          fontStyle: "italic", fontWeight: 300,
-          color: "rgba(255,255,255,0.45)",
-          maxWidth: "440px", lineHeight: 1.5, opacity: 0,
-        }}>
-          Bâtir ce qui compte, partout où c&apos;est nécessaire.
         </p>
       </div>
 

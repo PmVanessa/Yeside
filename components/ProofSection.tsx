@@ -120,7 +120,7 @@ export function ProofSection() {
               lineHeight: 1.05, marginBottom: "32px",
               maxWidth: "560px", opacity: 0,
             }}>
-              When they built the programme, they put her face on it.
+              When they built the programme, they put my face on it.
             </h2>
 
             <p className="proof-body" style={{
@@ -131,7 +131,7 @@ export function ProofSection() {
               marginBottom: "36px", opacity: 0,
             }}>
               From actuarial science to the boardroom, from London to eight African
-              markets. Yeside Kazeem is what seniority looks like when it has been
+              markets. This is what seniority looks like when it has been
               built, not appointed.
             </p>
 
@@ -143,7 +143,7 @@ export function ProofSection() {
               letterSpacing: "0.03em",
               opacity: 0,
             }}>
-              Bâtir. Gouverner. Diriger.
+              Build. Govern. Lead.
             </div>
           </div>
 

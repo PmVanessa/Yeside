@@ -108,7 +108,7 @@ export const stops: JourneyStop[] = [
     org: "International Actuarial Association",
     role: "Vice Chair, Africa Subcommittee",
     bullets: [
-      "Represents Africa's actuarial interests at the global level.",
+      "Representing Africa's actuarial interests at the global level.",
       "Member of the IAA Strategic Planning Committee, covering AI, climate change, and cyber risk.",
     ],
     bg: "#0F1F3D",
@@ -121,7 +121,7 @@ export const stops: JourneyStop[] = [
     org: "Tangerine Life Insurance",
     role: "Independent Non-Executive Director",
     bullets: [
-      "Chairs the Enterprise Risk Management and Technical Committee.",
+      "Chair of the Enterprise Risk Management and Technical Committee.",
       "Led CEO and C-Suite recruitment and set performance KPIs for senior management.",
     ],
     bg: "#080808",
@@ -161,7 +161,7 @@ export const stops: JourneyStop[] = [
     role: "Governor",
     bullets: [
       "Member of the Finance & Resource Committee.",
-      "Brings two decades of financial services leadership to one of Surrey's largest further education institutions.",
+      "Bringing two decades of financial services leadership to one of Surrey's largest further education institutions.",
     ],
     bg: "#0F1F3D",
     accent: "#004B87",

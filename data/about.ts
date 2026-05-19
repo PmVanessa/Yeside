@@ -14,11 +14,11 @@ export const achievements: Achievement[] = [
     index: "01",
     tag: "INSTITUTION BUILDER",
     headline: "Building the infrastructure Africa's actuarial profession needed.",
-    body: "Co-founded the African Actuarial Development Academy — the pan-African body built by actuaries in Africa, for Africa, operating in English and French. As President of the Nigerian Actuarial Society, secured IAA Full Member Status for Nigeria, a historic first. Now Technical Lead of Nigeria's inaugural Mortality Table, and Chair of the NAS/NAICOM Discount Rate Committee — the body whose monthly risk-free yield curve every Nigerian insurer uses for IFRS 17. She doesn't just work in the profession. She sets its standards.",
+    body: "Co-founded the African Actuarial Development Academy — the pan-African body built by actuaries in Africa, for Africa, operating in English and French. As President of the Nigerian Actuarial Society, secured IAA Full Member Status for Nigeria, a historic first. Now Technical Lead of Nigeria's inaugural Mortality Table, and Chair of the NAS/NAICOM Discount Rate Committee — the body whose monthly risk-free yield curve every Nigerian insurer uses for IFRS 17. I don't just work in the profession. I set its standards.",
     stats: [
       { value: "1st", label: "Mortality table in Nigeria" },
       { value: "IAA", label: "Full membership secured" },
-      { value: "IFRS 17", label: "Discount rate she sets" },
+      { value: "IFRS 17", label: "Discount rate I set" },
     ],
     bg: "#080808",
   },

@@ -98,9 +98,17 @@ export function Hero() {
             <div className="yk-sub" style={{
               fontFamily: "var(--font-mono)", fontSize: "12px",
               color: "rgba(10,10,10,0.65)", letterSpacing: "0.2em",
-              marginBottom: "18px", opacity: 0,
+              marginBottom: "10px", opacity: 0,
             }}>
               FIA · FNAS · BOARD DIRECTOR · CO-FOUNDER
+            </div>
+
+            <div className="yk-sub" style={{
+              fontFamily: "var(--font-mono)", fontSize: "11px",
+              color: "rgba(10,10,10,0.42)", letterSpacing: "0.2em",
+              marginBottom: "22px", opacity: 0,
+            }}>
+              ENGLISH · FRENCH · MULTILINGUAL
             </div>
 
             <p className="yk-sub" style={{
@@ -111,7 +119,7 @@ export function Hero() {
               maxWidth: "440px", lineHeight: 1.45,
               marginBottom: "40px", opacity: 0,
             }}>
-              She builds what Africa&apos;s financial future needs.
+              I build what Africa&apos;s financial future needs.
             </p>
 
             <div className="flex flex-wrap gap-4">
