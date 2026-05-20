@@ -2,7 +2,6 @@
 
 import { useEffect, useRef } from "react";
 import { achievements, credentials } from "@/data/about";
-import { StatsMarquee } from "@/components/StatsMarquee";
 import { LINKEDIN } from "@/data/home";
 
 export default function AboutPage() {
@@ -87,8 +86,6 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
-
-      <StatsMarquee />
 
       {/* Achievement sections */}
       {achievements.map((ach, i) => (

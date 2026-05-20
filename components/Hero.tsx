@@ -57,14 +57,14 @@ export function Hero() {
       style={{ background: "#ffffff" }}
     >
       <div className="w-full px-6 md:px-16 pt-28 pb-16">
-        <div className="flex flex-col lg:flex-row lg:items-center gap-12 lg:gap-16">
+        <div className="flex flex-col lg:flex-row lg:items-center" style={{ gap: "64px" }}>
 
           {/* Text */}
-          <div className="yk-names flex-1">
-            <div style={{ overflow: "hidden" }}>
+          <div className="yk-names flex-1" style={{ minWidth: 0 }}>
+            <div>
               <div className="yk-n1" style={{
                 fontFamily: "var(--font-cormorant)",
-                fontSize: "clamp(82px, 17vw, 240px)",
+                fontSize: "clamp(82px, 17vw, 196px)",
                 fontWeight: 600, color: "#0A0A0A",
                 lineHeight: 0.86, letterSpacing: "-0.03em",
                 opacity: 0,
@@ -72,10 +72,10 @@ export function Hero() {
                 YESIDE
               </div>
             </div>
-            <div style={{ overflow: "hidden" }}>
+            <div>
               <div className="yk-n2" style={{
                 fontFamily: "var(--font-cormorant)",
-                fontSize: "clamp(82px, 17vw, 240px)",
+                fontSize: "clamp(82px, 17vw, 196px)",
                 fontWeight: 600, color: "#0A0A0A",
                 lineHeight: 0.86, letterSpacing: "-0.03em",
                 opacity: 0,
@@ -90,34 +90,34 @@ export function Hero() {
               background: "rgba(10,10,10,0.12)",
               transformOrigin: "left center",
               transform: "scaleX(0)",
-              marginTop: "24px",
-              marginBottom: "24px",
-              maxWidth: "600px",
+              marginTop: "28px",
+              marginBottom: "28px",
+              maxWidth: "520px",
             }} />
 
             <div className="yk-sub" style={{
-              fontFamily: "var(--font-mono)", fontSize: "12px",
-              color: "rgba(10,10,10,0.65)", letterSpacing: "0.2em",
+              fontFamily: "var(--font-mono)", fontSize: "14px",
+              color: "rgba(10,10,10,0.65)", letterSpacing: "0.18em",
               marginBottom: "10px", opacity: 0,
             }}>
               FIA · FNAS · BOARD DIRECTOR · CO-FOUNDER
             </div>
 
             <div className="yk-sub" style={{
-              fontFamily: "var(--font-mono)", fontSize: "11px",
-              color: "rgba(10,10,10,0.42)", letterSpacing: "0.2em",
-              marginBottom: "22px", opacity: 0,
+              fontFamily: "var(--font-mono)", fontSize: "13px",
+              color: "rgba(10,10,10,0.42)", letterSpacing: "0.18em",
+              marginBottom: "28px", opacity: 0,
             }}>
               ENGLISH · FRENCH · MULTILINGUAL
             </div>
 
             <p className="yk-sub" style={{
               fontFamily: "var(--font-cormorant)",
-              fontSize: "clamp(20px, 2.2vw, 27px)",
+              fontSize: "clamp(22px, 2.4vw, 30px)",
               fontStyle: "italic", fontWeight: 300,
               color: "rgba(10,10,10,0.72)",
               maxWidth: "440px", lineHeight: 1.45,
-              marginBottom: "40px", opacity: 0,
+              marginBottom: "44px", opacity: 0,
             }}>
               I build what Africa&apos;s financial future needs.
             </p>
@@ -126,12 +126,12 @@ export function Hero() {
               <a href={LINKEDIN} target="_blank" rel="noopener noreferrer"
                 className="yk-cta"
                 style={{
-                  fontFamily: "var(--font-mono)", fontSize: "12px",
+                  fontFamily: "var(--font-mono)", fontSize: "13px",
                   color: "#ffffff", letterSpacing: "0.16em",
                   textDecoration: "none", opacity: 0,
                   background: "#1B3A6B",
                   border: "1px solid #1B3A6B",
-                  padding: "13px 26px",
+                  padding: "15px 30px",
                   display: "inline-block",
                 }}>
                 INVITE TO SPEAK →
@@ -139,12 +139,12 @@ export function Hero() {
               <a href={LINKEDIN} target="_blank" rel="noopener noreferrer"
                 className="yk-cta"
                 style={{
-                  fontFamily: "var(--font-mono)", fontSize: "12px",
+                  fontFamily: "var(--font-mono)", fontSize: "13px",
                   color: "#1B3A6B", letterSpacing: "0.16em",
                   textDecoration: "none", opacity: 0,
                   background: "transparent",
                   border: "1px solid #1B3A6B",
-                  padding: "13px 26px",
+                  padding: "15px 30px",
                   display: "inline-block",
                 }}>
                 BOARD ENQUIRIES →
@@ -154,7 +154,7 @@ export function Hero() {
 
           {/* Photo */}
           <div className="yk-photo flex-shrink-0" style={{
-            width: "clamp(260px, 36vw, 500px)", opacity: 0,
+            width: "clamp(260px, 32vw, 440px)", opacity: 0,
           }}>
             <Image
               src="/images/yeside-hero.jpg"

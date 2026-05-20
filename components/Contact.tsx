@@ -96,29 +96,29 @@ export function Contact() {
         {contactColumns.map((col, i) => (
           <div key={i} className="ct-col" style={{ opacity: 0, display: "flex", flexDirection: "column" }}>
             <div style={{
-              fontFamily: "var(--font-mono)", fontSize: "12px",
+              fontFamily: "var(--font-mono)", fontSize: "13px",
               color: "rgba(255,255,255,0.6)", letterSpacing: "0.2em",
-              marginBottom: "18px",
+              marginBottom: "20px",
             }}>
               {col.label}
             </div>
-            <div style={{ marginBottom: "24px", flex: 1 }}>
+            <div style={{ marginBottom: "28px", flex: 1 }}>
               {col.lines.map((line, j) => (
                 <div key={j} style={{
-                  fontFamily: "var(--font-dm)", fontSize: "14px",
-                  color: "rgba(255,255,255,0.75)", lineHeight: 1.75,
+                  fontFamily: "var(--font-dm)", fontSize: "16px",
+                  color: "rgba(255,255,255,0.75)", lineHeight: 1.8,
                 }}>
                   {line}
                 </div>
               ))}
             </div>
             <a href={LINKEDIN} target="_blank" rel="noopener noreferrer" style={{
-              fontFamily: "var(--font-mono)", fontSize: "12px",
+              fontFamily: "var(--font-mono)", fontSize: "13px",
               color: "#ffffff", letterSpacing: "0.14em",
               textDecoration: "none",
               background: "#1B3A6B",
               border: "1px solid #1B3A6B",
-              padding: "11px 20px",
+              padding: "13px 24px",
               display: "inline-block",
               alignSelf: "flex-start",
             }}>
@@ -132,33 +132,33 @@ export function Contact() {
       <div className="ct-bottom flex flex-col md:flex-row md:items-end justify-between gap-6" style={{ opacity: 0 }}>
         <div>
           <div style={{
-            fontFamily: "var(--font-mono)", fontSize: "12px",
+            fontFamily: "var(--font-mono)", fontSize: "13px",
             color: "rgba(255,255,255,0.6)", letterSpacing: "0.2em",
-            marginBottom: "10px",
+            marginBottom: "12px",
           }}>
             CONNECT
           </div>
           <a href={LINKEDIN} target="_blank" rel="noopener noreferrer" style={{
-            fontFamily: "var(--font-mono)", fontSize: "12px",
-            color: "rgba(255,255,255,0.82)", letterSpacing: "0.1em",
-            textDecoration: "none", display: "block", marginBottom: "14px",
+            fontFamily: "var(--font-mono)", fontSize: "14px",
+            color: "rgba(255,255,255,0.82)", letterSpacing: "0.08em",
+            textDecoration: "none", display: "block", marginBottom: "16px",
           }}>
             linkedin.com/in/yesidekazeem
           </a>
           <Link href="/journey" style={{
-            fontFamily: "var(--font-mono)", fontSize: "12px",
+            fontFamily: "var(--font-mono)", fontSize: "13px",
             color: "#ffffff", letterSpacing: "0.15em",
             textDecoration: "none", display: "inline-block",
             background: "#1B3A6B",
             border: "1px solid #1B3A6B",
-            padding: "10px 18px",
+            padding: "13px 24px",
           }}>
             VIEW CAREER JOURNEY →
           </Link>
         </div>
 
         <div style={{
-          fontFamily: "var(--font-mono)", fontSize: "12px",
+          fontFamily: "var(--font-mono)", fontSize: "13px",
           color: "rgba(255,255,255,0.5)", letterSpacing: "0.1em",
           textAlign: "right", lineHeight: 1.85,
         }}>

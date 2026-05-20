@@ -71,10 +71,10 @@ export function StatsMarquee() {
                 </div>
                 <div style={{
                   fontFamily: "var(--font-mono)",
-                  fontSize: "12px",
+                  fontSize: "14px",
                   color: "rgba(255,255,255,0.7)",
                   letterSpacing: "0.18em",
-                  marginTop: "8px",
+                  marginTop: "10px",
                 }}>
                   {s.l}
                 </div>

@@ -4,7 +4,7 @@ export interface JourneyStop {
   country: string;
   org: string;
   role: string;
-  bullets: [string, string];
+  bullets: string[];
   bg: string;
   accent: string;
 }
@@ -17,7 +17,7 @@ export const stops: JourneyStop[] = [
     org: "Deloitte UK",
     role: "Manager, Actuarial",
     bullets: [
-      "Led actuarial engagements across pensions, investment, and life assurance for major UK clients over a decade.",
+      "Led actuarial engagements across pensions, life assurance, and investment for UK clients over a decade.",
       "Led buy-side due diligence for the acquisitions of Prudential Ghana and Prudential Kenya.",
     ],
     bg: "#080808",
@@ -30,8 +30,8 @@ export const stops: JourneyStop[] = [
     org: "Old Mutual Nigeria",
     role: "Actuarial Executive & Chief Risk Officer",
     bullets: [
-      "Implemented a pricing model that helped double revenue.",
-      "Released a fifth of reserves through cross-departmental operational improvements.",
+      "Built a pricing model that doubled revenue.",
+      "Released 20% of reserves through a bottom-up operational review.",
     ],
     bg: "#0F1F3D",
     accent: "#00A3A1",
@@ -44,7 +44,7 @@ export const stops: JourneyStop[] = [
     role: "Senior Business Development Manager",
     bullets: [
       "Designed and deployed the Enterprise Risk Framework across eight African markets.",
-      "Liaised with regulators to secure approval for Prudential Zenith Nigeria.",
+      "Secured regulatory approval for Prudential Zenith Nigeria.",
     ],
     bg: "#080808",
     accent: "#E3000F",
@@ -70,7 +70,7 @@ export const stops: JourneyStop[] = [
     role: "Managing Director",
     bullets: [
       "Led the company to 40% revenue growth — 2nd fastest growing non-life insurer in the market.",
-      "Secured the highest people culture score among peer entities across the Group.",
+      "Ranked first in people culture across all Group peer entities.",
     ],
     bg: "#080808",
     accent: "#E3000F",
@@ -82,8 +82,7 @@ export const stops: JourneyStop[] = [
     org: "Insythes Limited",
     role: "Managing Director, Consulting",
     bullets: [
-      "Developed go-to-market strategy for KCB's pan-African insurance platform, unlocking c.$1m in annual GWP.",
-      "Leading Phase II ESG strategy implementation for a development agency across multiple markets.",
+      "Built go-to-market strategy for KCB's pan-African insurance platform, unlocking c.$1m in annual GWP.",
     ],
     bg: "#0F1F3D",
     accent: "#1B3A6B",
@@ -96,7 +95,7 @@ export const stops: JourneyStop[] = [
     role: "President",
     bullets: [
       "Secured IAA Full Member Status for Nigeria — a historic first.",
-      "Led the GAIN initiative (UNDP/Milliman) to transform actuarial supply and demand across Nigeria.",
+      "Led the GAIN initiative with UNDP and Milliman, building actuarial capacity across Nigeria's insurance sector.",
     ],
     bg: "#080808",
     accent: "#1B3A6B",
@@ -108,8 +107,8 @@ export const stops: JourneyStop[] = [
     org: "International Actuarial Association",
     role: "Vice Chair, Africa Subcommittee",
     bullets: [
-      "Representing Africa's actuarial interests at the global level.",
-      "Member of the IAA Strategic Planning Committee, covering AI, climate change, and cyber risk.",
+      "Representing Africa's actuarial societies at the highest international forum.",
+      "On the IAA Strategic Planning Committee — setting the profession's agenda on AI, climate risk, and cyber.",
     ],
     bg: "#0F1F3D",
     accent: "#004B87",
@@ -122,7 +121,7 @@ export const stops: JourneyStop[] = [
     role: "Independent Non-Executive Director",
     bullets: [
       "Chair of the Enterprise Risk Management and Technical Committee.",
-      "Led CEO and C-Suite recruitment and set performance KPIs for senior management.",
+      "Oversaw CEO recruitment and established performance frameworks for the C-Suite.",
     ],
     bg: "#080808",
     accent: "#FF6B2C",
@@ -147,8 +146,7 @@ export const stops: JourneyStop[] = [
     org: "NCGC",
     role: "Independent Non-Executive Director",
     bullets: [
-      "Chair of the Audit Committee at the FG-backed institution unlocking MSME financing across Nigeria.",
-      "Member of the Risk Committee and Guarantee Appraisal Committee.",
+      "Chair of the Audit Committee at the Federal Government-backed institution financing Nigeria's small and mid-size businesses.",
     ],
     bg: "#080808",
     accent: "#008751",
@@ -161,7 +159,6 @@ export const stops: JourneyStop[] = [
     role: "Governor",
     bullets: [
       "Member of the Finance & Resource Committee.",
-      "Bringing two decades of financial services leadership to one of Surrey's largest further education institutions.",
     ],
     bg: "#0F1F3D",
     accent: "#004B87",

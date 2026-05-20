@@ -107,6 +107,48 @@ export default function JourneyPage() {
         )}
       </div>
 
+      {/* Hero */}
+      <section className="relative w-full px-6 md:px-16 pt-36 pb-24"
+        style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+        <div className="absolute pointer-events-none select-none" style={{
+          fontFamily: "var(--font-cormorant)",
+          fontSize: "clamp(160px, 28vw, 400px)",
+          fontWeight: 700, color: "#ffffff", opacity: 0.025,
+          lineHeight: 1, right: "-2vw", bottom: "-0.1em",
+        }}>
+          YK
+        </div>
+        <div className="relative z-10 max-w-3xl">
+          <div style={{
+            fontFamily: "var(--font-mono)", fontSize: "12px",
+            color: "rgba(255,255,255,0.45)", letterSpacing: "0.22em",
+            marginBottom: "28px",
+          }}>
+            WORK · JOURNEY
+          </div>
+          <h1 style={{
+            fontFamily: "var(--font-cormorant)",
+            fontSize: "clamp(40px, 6vw, 82px)",
+            fontWeight: 600, color: "#ffffff",
+            lineHeight: 1.0, letterSpacing: "-0.02em",
+            marginBottom: "36px",
+          }}>
+            Twenty years.<br />
+            Two continents.<br />
+            One direction.
+          </h1>
+          <p style={{
+            fontFamily: "var(--font-dm)",
+            fontSize: "clamp(15px, 1.3vw, 17px)",
+            color: "rgba(255,255,255,0.62)",
+            lineHeight: 1.85, maxWidth: "480px",
+          }}>
+            From Deloitte London to the boardrooms of Continental Africa.
+            Every role earned. Every market entered on purpose.
+          </p>
+        </div>
+      </section>
+
       {/* Stops */}
       {orderedStops.map((stop, i) => (
         <section
@@ -169,7 +211,7 @@ export default function JourneyPage() {
                       lineHeight: 1.75,
                       paddingLeft: "20px",
                       position: "relative",
-                      marginBottom: j === 0 ? "10px" : 0,
+                      marginBottom: j < stop.bullets.length - 1 ? "10px" : 0,
                     }}>
                       <span style={{
                         position: "absolute", left: 0, top: "0.6em",
@@ -195,13 +237,13 @@ export default function JourneyPage() {
             fontSize: "clamp(28px, 3.5vw, 48px)",
             fontWeight: 500, color: "#ffffff", lineHeight: 1.15, marginBottom: "12px",
           }}>
-            Twenty years. Two continents.<br />One direction.
+            Still building.
           </div>
           <div style={{
             fontFamily: "var(--font-dm)", fontSize: "14px",
             color: "rgba(255,255,255,0.55)",
           }}>
-            London to Continental Africa, still building.
+            London to Continental Africa.
           </div>
         </div>
         <Link href="/" style={{
@@ -210,7 +252,7 @@ export default function JourneyPage() {
           letterSpacing: "0.16em", textDecoration: "none", flexShrink: 0,
           background: "#1B3A6B", border: "1px solid #1B3A6B", padding: "13px 26px",
         }}>
-          ← BACK TO PROFILE
+          ← HOME
         </Link>
       </div>
     </main>

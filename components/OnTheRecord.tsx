@@ -109,7 +109,7 @@ export function OnTheRecord() {
 
       <div className="px-6 md:px-16 py-20 lg:py-28">
         <div className="otr-label" style={{
-          fontFamily: "var(--font-mono)", fontSize: "12px",
+          fontFamily: "var(--font-mono)", fontSize: "13px",
           color: "rgba(10,10,10,0.45)", letterSpacing: "0.2em",
           marginBottom: "40px", opacity: 0,
         }}>
@@ -151,33 +151,33 @@ export function OnTheRecord() {
                 (e.currentTarget as HTMLAnchorElement).style.marginRight = "0";
               }}
             >
-              <div style={{ display: "flex", alignItems: "baseline", gap: "20px", flex: 1, minWidth: 0 }}>
+              <div style={{ display: "flex", alignItems: "baseline", gap: "24px", flex: 1, minWidth: 0 }}>
                 <span style={{
-                  fontFamily: "var(--font-mono)", fontSize: "10px",
-                  color: "rgba(10,10,10,0.28)", letterSpacing: "0.14em",
-                  flexShrink: 0, width: "36px",
+                  fontFamily: "var(--font-mono)", fontSize: "13px",
+                  color: "rgba(10,10,10,0.35)", letterSpacing: "0.12em",
+                  flexShrink: 0, width: "42px",
                 }}>
                   {e.year}
                 </span>
                 <span style={{
-                  fontFamily: "var(--font-mono)", fontSize: "10px",
-                  color: "rgba(10,10,10,0.35)", letterSpacing: "0.18em",
-                  flexShrink: 0,
+                  fontFamily: "var(--font-mono)", fontSize: "13px",
+                  color: "rgba(10,10,10,0.45)", letterSpacing: "0.14em",
+                  flexShrink: 0, minWidth: "180px",
                 }}>
                   {e.org}
                 </span>
                 <span style={{
                   fontFamily: "var(--font-dm)",
-                  fontSize: "clamp(14px, 1.2vw, 17px)",
-                  color: "rgba(10,10,10,0.82)",
+                  fontSize: "clamp(16px, 1.4vw, 20px)",
+                  color: "rgba(10,10,10,0.85)",
                   lineHeight: 1.4,
                 }}>
                   {e.label}
                 </span>
               </div>
               <span style={{
-                fontFamily: "var(--font-mono)", fontSize: "12px",
-                color: "rgba(10,10,10,0.3)", flexShrink: 0,
+                fontFamily: "var(--font-mono)", fontSize: "16px",
+                color: "rgba(10,10,10,0.35)", flexShrink: 0,
               }}>
                 ↗
               </span>
