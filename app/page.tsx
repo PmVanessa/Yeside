@@ -1,5 +1,6 @@
 import { Hero } from "@/components/Hero";
-import { ProofSection } from "@/components/ProofSection";
+import { StatsMarquee } from "@/components/StatsMarquee";
+import { OnTheRecord } from "@/components/OnTheRecord";
 import { WhatSheDoes } from "@/components/WhatSheDoes";
 import { AfricaSection } from "@/components/AfricaSection";
 import { Contact } from "@/components/Contact";
@@ -8,7 +9,8 @@ export default function Home() {
   return (
     <main>
       <Hero />
-      <ProofSection />
+      <StatsMarquee />
+      <OnTheRecord />
       <WhatSheDoes />
       <AfricaSection />
       <Contact />

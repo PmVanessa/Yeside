@@ -1,4 +1,4 @@
-export const credentials = ["FIA", "FNAS", "Board Director", "Co-Founder", "Former President NAS", "IAA Vice Chair"];
+export const credentials = ["FIA", "FNAS", "Board Director", "Co-Founder"];
 
 export interface Achievement {
   index: string;
@@ -13,11 +13,10 @@ export const achievements: Achievement[] = [
   {
     index: "01",
     tag: "INSTITUTION BUILDER",
-    headline: "Building the infrastructure Africa's actuarial profession needed.",
-    body: "Co-founded the African Actuarial Development Academy — the pan-African body built by actuaries in Africa, for Africa, operating in English and French. As President of the Nigerian Actuarial Society, secured IAA Full Member Status for Nigeria, a historic first. Now Technical Lead of Nigeria's inaugural Mortality Table, and Chair of the NAS/NAICOM Discount Rate Committee — the body whose monthly risk-free yield curve every Nigerian insurer uses for IFRS 17. I don't just work in the profession. I set its standards.",
+    headline: "Setting the technical standards Nigeria's profession runs on.",
+    body: "Technical Lead of Nigeria's inaugural Mortality Table — the first actuarial data infrastructure of its kind in the country. Chair of the NAS/NAICOM Discount Rate Committee, whose monthly risk-free yield curve every Nigerian insurer applies under IFRS 17. I don't just work in the profession. I set its standards.",
     stats: [
       { value: "1st", label: "Mortality table in Nigeria" },
-      { value: "IAA", label: "Full membership secured" },
       { value: "IFRS 17", label: "Discount rate I set" },
     ],
     bg: "#080808",
@@ -58,25 +57,5 @@ export const achievements: Achievement[] = [
     ],
     bg: "#0F1F3D",
   },
-  {
-    index: "05",
-    tag: "GLOBAL VOICE",
-    headline: "Representing Africa's actuarial interests on the world stage.",
-    body: "Vice Chair of the IAA Africa Subcommittee, representing the continent at the International Actuarial Association. Speaker at IBW Women in Insurance Summit in London, COP30 IAA delegation, SCGN 20th Annual Conference, Convention A, and actuview Speaker of the Month. A consistent voice for African actuarial excellence in global forums.",
-    stats: [
-      { value: "6+", label: "International stages" },
-      { value: "IAA", label: "Vice Chair, Africa" },
-      { value: "2", label: "Continents represented" },
-    ],
-    bg: "#080808",
-  },
 ];
 
-export const statsStrip = [
-  { n: "20+", l: "YEARS" },
-  { n: "12+", l: "ROLES" },
-  { n: "8", l: "MARKETS" },
-  { n: "3", l: "COUNTRIES" },
-  { n: "2", l: "CONTINENTS" },
-  { n: "1", l: "DIRECTION" },
-];

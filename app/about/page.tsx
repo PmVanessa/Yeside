@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { achievements, credentials, statsStrip } from "@/data/about";
+import { achievements, credentials } from "@/data/about";
+import { StatsMarquee } from "@/components/StatsMarquee";
 import { LINKEDIN } from "@/data/home";
 
 export default function AboutPage() {
@@ -87,28 +88,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Numbers strip */}
-      <div className="px-6 md:px-16 py-12" style={{ borderBottom: "1px solid rgba(255,255,255,0.06)", background: "#0F1F3D" }}>
-        <div className="grid grid-cols-3 md:grid-cols-6 gap-8">
-          {statsStrip.map((s, i) => (
-            <div key={i}>
-              <div style={{
-                fontFamily: "var(--font-cormorant)",
-                fontSize: "clamp(36px, 4vw, 52px)",
-                fontWeight: 600, color: "#ffffff", lineHeight: 1,
-              }}>
-                {s.n}
-              </div>
-              <div style={{
-                fontFamily: "var(--font-mono)", fontSize: "12px",
-                color: "rgba(255,255,255,0.7)", letterSpacing: "0.18em", marginTop: "8px",
-              }}>
-                {s.l}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
+      <StatsMarquee />
 
       {/* Achievement sections */}
       {achievements.map((ach, i) => (

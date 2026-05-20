@@ -88,14 +88,18 @@ export function Navigation() {
               border: "none",
               cursor: "pointer",
               padding: "6px",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              gap: "5px",
               width: "32px",
               height: "32px",
             }}
           >
+            <div style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              gap: "5px",
+              width: "100%",
+              height: "100%",
+            }}>
             <span style={{
               display: "block", height: "1px", background: iconColor,
               width: "22px",
@@ -116,6 +120,7 @@ export function Navigation() {
               transition: "transform 0.25s ease, opacity 0.2s",
               transform: open ? "translateY(-6px) rotate(-45deg)" : "none",
             }} />
+            </div>
           </button>
         </div>
       </nav>
