@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, DM_Sans, Space_Mono } from "next/font/google";
+import { Cormorant_Garamond, Instrument_Sans, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { Navigation } from "@/components/Navigation";
@@ -11,16 +11,16 @@ const cormorant = Cormorant_Garamond({
   style: ["normal", "italic"],
 });
 
-const dmSans = DM_Sans({
+const instrumentSans = Instrument_Sans({
   variable: "--font-dm",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
+  weight: ["400", "500", "600"],
 });
 
-const spaceMono = Space_Mono({
+const ibmPlexMono = IBM_Plex_Mono({
   variable: "--font-mono",
   subsets: ["latin"],
-  weight: ["400", "700"],
+  weight: ["400", "500", "700"],
 });
 
 export const metadata: Metadata = {
@@ -63,7 +63,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${cormorant.variable} ${dmSans.variable} ${spaceMono.variable}`}
+      className={`${cormorant.variable} ${instrumentSans.variable} ${ibmPlexMono.variable}`}
     >
       <body suppressHydrationWarning>
         <Navigation />

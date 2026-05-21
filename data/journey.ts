@@ -11,6 +11,7 @@ export interface JourneyStop {
 
 export const stops: JourneyStop[] = [
   {
+    // London — institutional, cold. Where it started.
     year: "2004",
     city: "LONDON",
     country: "UNITED KINGDOM",
@@ -20,10 +21,11 @@ export const stops: JourneyStop[] = [
       "Led actuarial engagements across pensions, life assurance, and investment for UK clients over a decade.",
       "Led buy-side due diligence for the acquisitions of Prudential Ghana and Prudential Kenya.",
     ],
-    bg: "#080808",
+    bg: "#0C1018",
     accent: "#86BC25",
   },
   {
+    // Lagos — warm earth. First move to the continent.
     year: "2014",
     city: "LAGOS",
     country: "NIGERIA",
@@ -33,10 +35,11 @@ export const stops: JourneyStop[] = [
       "Built a pricing model that doubled revenue.",
       "Released 20% of reserves through a bottom-up operational review.",
     ],
-    bg: "#0F1F3D",
-    accent: "#00A3A1",
+    bg: "#170D04",
+    accent: "#B5892B",
   },
   {
+    // Nairobi — deep equatorial green. Eight markets begin here.
     year: "2016",
     city: "NAIROBI",
     country: "KENYA",
@@ -46,10 +49,11 @@ export const stops: JourneyStop[] = [
       "Designed and deployed the Enterprise Risk Framework across eight African markets.",
       "Secured regulatory approval for Prudential Zenith Nigeria.",
     ],
-    bg: "#080808",
-    accent: "#E3000F",
+    bg: "#061409",
+    accent: "#2D8653",
   },
   {
+    // Douala — Cameroon warm red-earth. Group CRO, three countries.
     year: "2019",
     city: "DOUALA",
     country: "CAMEROON",
@@ -59,10 +63,11 @@ export const stops: JourneyStop[] = [
       "Built the group risk architecture across Cameroon, Togo, and Côte d'Ivoire.",
       "Revamped reinsurance arrangements, cutting premium paid by 30%.",
     ],
-    bg: "#0F1F3D",
-    accent: "#E3000F",
+    bg: "#190A04",
+    accent: "#C84B31",
   },
   {
+    // Douala — same ground, bigger authority. Managing Director.
     year: "2020",
     city: "DOUALA",
     country: "CAMEROON",
@@ -72,10 +77,11 @@ export const stops: JourneyStop[] = [
       "Led the company to 40% revenue growth — 2nd fastest growing non-life insurer in the market.",
       "Ranked first in people culture across all Group peer entities.",
     ],
-    bg: "#080808",
-    accent: "#E3000F",
+    bg: "#140808",
+    accent: "#C84B31",
   },
   {
+    // Lagos returns — now as founder and consultant.
     year: "2022",
     city: "LAGOS",
     country: "NIGERIA",
@@ -84,10 +90,11 @@ export const stops: JourneyStop[] = [
     bullets: [
       "Built go-to-market strategy for KCB's pan-African insurance platform, unlocking c.$1m in annual GWP.",
     ],
-    bg: "#0F1F3D",
-    accent: "#1B3A6B",
+    bg: "#080F1A",
+    accent: "#4A7C6F",
   },
   {
+    // Lagos — NAS President. The historic moment.
     year: "2022",
     city: "LAGOS",
     country: "NIGERIA",
@@ -97,10 +104,11 @@ export const stops: JourneyStop[] = [
       "Secured IAA Full Member Status for Nigeria — a historic first.",
       "Led the GAIN initiative with UNDP and Milliman, building actuarial capacity across Nigeria's insurance sector.",
     ],
-    bg: "#080808",
-    accent: "#1B3A6B",
+    bg: "#051209",
+    accent: "#008751",
   },
   {
+    // Global — the IAA. Deepest institutional blue. The apex of international standing.
     year: "2022",
     city: "GLOBAL",
     country: "CONTINENTAL AFRICA",
@@ -110,10 +118,11 @@ export const stops: JourneyStop[] = [
       "Representing Africa's actuarial societies at the highest international forum.",
       "On the IAA Strategic Planning Committee — setting the profession's agenda on AI, climate risk, and cyber.",
     ],
-    bg: "#0F1F3D",
-    accent: "#004B87",
+    bg: "#03061A",
+    accent: "#4A7FD4",
   },
   {
+    // Lagos — board seat. Tangerine warmth.
     year: "2023",
     city: "LAGOS",
     country: "NIGERIA",
@@ -123,10 +132,11 @@ export const stops: JourneyStop[] = [
       "Chair of the Enterprise Risk Management and Technical Committee.",
       "Oversaw CEO recruitment and established performance frameworks for the C-Suite.",
     ],
-    bg: "#080808",
-    accent: "#FF6B2C",
+    bg: "#180904",
+    accent: "#E8622A",
   },
   {
+    // London + pan-Africa. Builder. Founding the academy.
     year: "2024",
     city: "LONDON",
     country: "PAN-AFRICAN",
@@ -136,10 +146,11 @@ export const stops: JourneyStop[] = [
       "Co-founded the pan-African body developing the next generation of actuaries in English and French.",
       "Technical Lead for Nigeria's inaugural Mortality Table; Chair of the NAS/NAICOM Discount Rate Committee.",
     ],
-    bg: "#0F1F3D",
-    accent: "#1B3A6B",
+    bg: "#0A0E1C",
+    accent: "#B5892B",
   },
   {
+    // Abuja — federal. Nigeria's government-backed institution.
     year: "2025",
     city: "ABUJA",
     country: "NIGERIA",
@@ -148,10 +159,11 @@ export const stops: JourneyStop[] = [
     bullets: [
       "Chair of the Audit Committee at the Federal Government-backed institution financing Nigeria's small and mid-size businesses.",
     ],
-    bg: "#080808",
+    bg: "#041008",
     accent: "#008751",
   },
   {
+    // Surrey — UK closes the circle. Still building both worlds.
     year: "2025",
     city: "SURREY",
     country: "UNITED KINGDOM",
@@ -160,7 +172,7 @@ export const stops: JourneyStop[] = [
     bullets: [
       "Member of the Finance & Resource Committee.",
     ],
-    bg: "#0F1F3D",
-    accent: "#004B87",
+    bg: "#0A1016",
+    accent: "#4A7FD4",
   },
 ];

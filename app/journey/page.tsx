@@ -7,109 +7,157 @@ import { stops } from "@/data/journey";
 const orderedStops = [...stops].reverse();
 
 export default function JourneyPage() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [activeStop, setActiveStop] = useState(0);
+  const outerRef      = useRef<HTMLDivElement>(null);   // tall scroll-space wrapper
+  const stickyRef     = useRef<HTMLDivElement>(null);   // sticky viewport container
+  const trackRef      = useRef<HTMLDivElement>(null);   // translating track
+  const progressRef   = useRef<HTMLDivElement>(null);   // progress fill bar
+  const [activeStop, setActiveStop]     = useState(0);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
   useEffect(() => {
-    const ctxs: { revert: () => void }[] = [];
+    const isDesktop = window.innerWidth >= 1024;
+    if (!isDesktop) return;
 
-    async function init() {
-      const { gsap } = await import("gsap");
-      const { ScrollTrigger } = await import("gsap/ScrollTrigger");
-      gsap.registerPlugin(ScrollTrigger);
+    const outer   = outerRef.current;
+    const track   = trackRef.current;
+    const progress = progressRef.current;
+    if (!outer || !track || !progress) return;
 
-      orderedStops.forEach((_, i) => {
-        const ctx = gsap.context(() => {
-          gsap.fromTo(`.stop-content-${i}`,
-            { opacity: 0, y: 32 },
-            { opacity: 1, y: 0, duration: 0.8, ease: "power2.out",
-              scrollTrigger: { trigger: `.stop-section-${i}`, start: "top 62%" } }
-          );
-          ScrollTrigger.create({
-            trigger: `.stop-section-${i}`,
-            start: "top 50%",
-            end: "bottom 50%",
-            onEnter: () => setActiveStop(i),
-            onEnterBack: () => setActiveStop(i),
-          });
-        });
-        ctxs.push(ctx);
-      });
+    const outerEl   = outer;
+    const trackEl   = track;
+    const progressEl = progress;
+
+    let raf = 0;
+    let current = 0;   // current translated x (lerped)
+    let target  = 0;   // target translated x (raw from scroll)
+
+    function onScroll() {
+      const rect     = outerEl.getBoundingClientRect();
+      const scrolled = Math.max(0, -rect.top);
+      const maxScroll = rect.height - window.innerHeight;
+      target = Math.min(scrolled, maxScroll);
     }
 
-    init();
-    return () => ctxs.forEach(ctx => ctx.revert());
+    function tick() {
+      // Lerp toward target for smooth momentum feel
+      current += (target - current) * 0.12;
+
+      const maxTravel = trackEl.scrollWidth - window.innerWidth;
+      const x = Math.min(current, maxTravel);
+      trackEl.style.transform = `translateX(${-x}px)`;
+
+      // Progress bar
+      const pct = maxTravel > 0 ? x / maxTravel : 0;
+      progressEl.style.transform = `scaleX(${pct})`;
+
+      // Active stop index
+      const idx = Math.round(pct * (orderedStops.length - 1));
+      setActiveStop(idx);
+
+      raf = requestAnimationFrame(tick);
+    }
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    raf = requestAnimationFrame(tick);
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      cancelAnimationFrame(raf);
+    };
   }, []);
 
+  // Mobile: vertical scroll active-stop tracking
+  useEffect(() => {
+    const isDesktop = window.innerWidth >= 1024;
+    if (isDesktop) return;
+
+    const observers: IntersectionObserver[] = [];
+
+    orderedStops.forEach((_, i) => {
+      const el = document.querySelector(`.v-stop-section-${i}`);
+      if (!el) return;
+      const obs = new IntersectionObserver(
+        ([entry]) => { if (entry.isIntersecting) setActiveStop(i); },
+        { threshold: 0.5 }
+      );
+      obs.observe(el);
+      observers.push(obs);
+    });
+
+    return () => observers.forEach(o => o.disconnect());
+  }, []);
+
+  function StopContent({ stop, variant }: {
+    stop: typeof orderedStops[0];
+    variant: "horizontal" | "vertical";
+  }) {
+    return (
+      <div style={{ opacity: 1 }}>
+        <div style={{
+          fontFamily: "var(--font-mono)", fontSize: "var(--text-label)",
+          color: stop.accent, letterSpacing: "var(--tracking-wide)", marginBottom: "8px",
+        }}>
+          {stop.year}
+        </div>
+        <div style={{
+          fontFamily: "var(--font-mono)", fontSize: "var(--text-label)",
+          color: "rgba(255,255,255,0.68)", letterSpacing: "var(--tracking-label)",
+          lineHeight: 1.7, marginBottom: "36px",
+        }}>
+          {stop.city} · {stop.country}
+        </div>
+
+        <h2 style={{
+          fontFamily: "var(--font-cormorant)",
+          fontSize: variant === "horizontal"
+            ? "var(--text-display)"
+            : "var(--text-head)",
+          fontWeight: 600, color: "#ffffff",
+          lineHeight: 1.0, marginBottom: "14px",
+          letterSpacing: "var(--tracking-tight)",
+        }}>
+          {stop.org}
+        </h2>
+
+        <div style={{
+          fontFamily: "var(--font-mono)", fontSize: "var(--text-label)",
+          color: "rgba(255,255,255,0.72)", letterSpacing: "var(--tracking-label)",
+          textTransform: "uppercase" as const, marginBottom: "32px",
+        }}>
+          {stop.role}
+        </div>
+
+        <ul style={{ listStyle: "none", padding: 0, margin: 0, maxWidth: "520px" }}>
+          {stop.bullets.map((bullet, j) => (
+            <li key={j} style={{
+              fontFamily: "var(--font-dm)",
+              fontSize: "var(--text-body)",
+              color: "rgba(255,255,255,0.72)",
+              lineHeight: "var(--leading-normal)",
+              paddingLeft: "20px",
+              position: "relative" as const,
+              marginBottom: j < stop.bullets.length - 1 ? "12px" : 0,
+            }}>
+              <span style={{
+                position: "absolute" as const, left: 0, top: "0.55em",
+                width: "4px", height: "4px",
+                background: stop.accent, display: "block",
+              }} />
+              {bullet}
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
+  }
+
   return (
-    <main ref={containerRef} style={{ background: "#080808" }}>
+    <main style={{ background: "#080808" }}>
 
-      {/* Desktop dot nav */}
-      <div className="hidden md:flex fixed right-6 top-1/2 z-50 flex-col gap-3"
-        style={{ transform: "translateY(-50%)" }}>
-        {orderedStops.map((s, i) => (
-          <a
-            key={i}
-            href={`#stop-${i}`}
-            title={`${s.year} · ${s.org}`}
-            style={{
-              display: "block", width: "6px", height: "6px", borderRadius: "50%",
-              background: activeStop === i ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.2)",
-              transition: "background 0.2s",
-            }}
-            onMouseEnter={e => (e.currentTarget.style.background = "rgba(255,255,255,0.7)")}
-            onMouseLeave={e => (e.currentTarget.style.background = activeStop === i ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.2)")}
-          />
-        ))}
-      </div>
-
-      {/* Mobile sticky indicator */}
-      <div className="md:hidden fixed bottom-6 left-1/2 z-50"
-        style={{ transform: "translateX(-50%)" }}>
-        <button
-          onClick={() => setMobileNavOpen(v => !v)}
-          style={{
-            fontFamily: "var(--font-mono)", fontSize: "12px",
-            color: "#ffffff", letterSpacing: "0.16em",
-            background: "rgba(27,58,107,0.95)",
-            border: "1px solid rgba(255,255,255,0.15)",
-            padding: "10px 20px", cursor: "pointer",
-            backdropFilter: "blur(8px)",
-          }}
-        >
-          {orderedStops[activeStop]?.year} · {orderedStops[activeStop]?.city} ↑
-        </button>
-        {mobileNavOpen && (
-          <div style={{
-            position: "absolute", bottom: "100%", left: "50%",
-            transform: "translateX(-50%)", marginBottom: "8px",
-            background: "rgba(8,8,8,0.97)", border: "1px solid rgba(255,255,255,0.08)",
-            padding: "8px 0", backdropFilter: "blur(12px)", minWidth: "220px",
-          }}>
-            {orderedStops.map((s, i) => (
-              <a
-                key={i}
-                href={`#stop-${i}`}
-                onClick={() => setMobileNavOpen(false)}
-                style={{
-                  display: "block", padding: "10px 20px",
-                  fontFamily: "var(--font-mono)", fontSize: "12px",
-                  color: activeStop === i ? "#ffffff" : "rgba(255,255,255,0.5)",
-                  letterSpacing: "0.14em", textDecoration: "none",
-                  background: activeStop === i ? "rgba(27,58,107,0.4)" : "transparent",
-                }}
-              >
-                {s.year} · {s.org}
-              </a>
-            ))}
-          </div>
-        )}
-      </div>
-
-      {/* Hero */}
-      <section className="relative w-full px-6 md:px-16 pt-36 pb-24"
-        style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+      {/* ── Page hero ─────────────────────────────────────────── */}
+      <section
+        className="relative w-full px-6 md:px-16 pt-36 pb-24"
+      >
         <div className="absolute pointer-events-none select-none" style={{
           fontFamily: "var(--font-cormorant)",
           fontSize: "clamp(160px, 28vw, 400px)",
@@ -120,17 +168,17 @@ export default function JourneyPage() {
         </div>
         <div className="relative z-10 max-w-3xl">
           <div style={{
-            fontFamily: "var(--font-mono)", fontSize: "12px",
-            color: "rgba(255,255,255,0.45)", letterSpacing: "0.22em",
+            fontFamily: "var(--font-mono)", fontSize: "var(--text-label)",
+            color: "rgba(255,255,255,0.68)", letterSpacing: "var(--tracking-nav)",
             marginBottom: "28px",
           }}>
-            WORK · JOURNEY
+            JOURNEY
           </div>
           <h1 style={{
             fontFamily: "var(--font-cormorant)",
-            fontSize: "clamp(40px, 6vw, 82px)",
+            fontSize: "var(--text-display)",
             fontWeight: 600, color: "#ffffff",
-            lineHeight: 1.0, letterSpacing: "-0.02em",
+            lineHeight: "var(--leading-tight)", letterSpacing: "var(--tracking-tight)",
             marginBottom: "36px",
           }}>
             Twenty years.<br />
@@ -139,9 +187,9 @@ export default function JourneyPage() {
           </h1>
           <p style={{
             fontFamily: "var(--font-dm)",
-            fontSize: "clamp(15px, 1.3vw, 17px)",
-            color: "rgba(255,255,255,0.62)",
-            lineHeight: 1.85, maxWidth: "480px",
+            fontSize: "var(--text-body)",
+            color: "rgba(255,255,255,0.80)",
+            lineHeight: "var(--leading-loose)", maxWidth: "480px",
           }}>
             From Deloitte London to the boardrooms of Continental Africa.
             Every role earned. Every market entered on purpose.
@@ -149,112 +197,194 @@ export default function JourneyPage() {
         </div>
       </section>
 
-      {/* Stops */}
-      {orderedStops.map((stop, i) => (
-        <section
-          key={i}
-          id={`stop-${i}`}
-          className={`stop-section-${i} relative w-full flex items-center`}
+      {/* ── Desktop: horizontal scroll (sticky) ───────────────── */}
+      {/*
+          outerRef is a tall div that provides scroll distance.
+          stickyRef is viewport-height, sticks to the top.
+          trackRef translates left as outerRef scrolls.
+          Total outer height = viewport + (stops - 1) * viewport = stops * 100vh
+      */}
+      <div
+        className="hidden lg:block"
+        ref={outerRef}
+        style={{ height: `${orderedStops.length * 100}vh` }}
+      >
+        <div
+          ref={stickyRef}
           style={{
-            minHeight: "100vh",
-            background: stop.bg,
-            borderBottom: "1px solid rgba(255,255,255,0.04)",
+            position: "sticky",
+            top: 0,
+            height: "100vh",
+            overflow: "hidden",
+            background: "#080808",
           }}
         >
-          <div className="relative z-10 w-full px-6 md:px-16 pt-28 pb-20">
-            <div
-              className={`stop-content-${i} flex flex-col lg:flex-row gap-10 lg:gap-20`}
-              style={{ opacity: 0 }}
-            >
-              {/* Year + location */}
-              <div className="flex-shrink-0 lg:w-44">
-                <div style={{
-                  fontFamily: "var(--font-mono)", fontSize: "13px",
-                  color: stop.accent, letterSpacing: "0.2em", marginBottom: "10px",
-                }}>
-                  {stop.year}
-                </div>
-                <div style={{
-                  fontFamily: "var(--font-mono)", fontSize: "11px",
-                  color: "rgba(255,255,255,0.45)", letterSpacing: "0.16em",
-                  lineHeight: 1.7,
-                }}>
-                  {stop.city}<br />{stop.country}
-                </div>
+          {/* Track */}
+          <div
+            ref={trackRef}
+            style={{
+              display: "flex",
+              height: "100%",
+              willChange: "transform",
+            }}
+          >
+            {orderedStops.map((stop, i) => (
+              <div
+                key={i}
+                style={{
+                  width: "100vw",
+                  height: "100%",
+                  flexShrink: 0,
+                  background: stop.bg,
+                  padding: "80px 96px 120px",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                }}
+              >
+                <StopContent stop={stop} variant="horizontal" />
               </div>
+            ))}
+          </div>
 
-              {/* Company, role, bullets */}
-              <div className="flex-1" style={{ maxWidth: "640px" }}>
-                <h2 style={{
-                  fontFamily: "var(--font-cormorant)",
-                  fontSize: "clamp(32px, 4.5vw, 60px)",
-                  fontWeight: 600, color: "#ffffff",
-                  lineHeight: 1.05, marginBottom: "12px",
-                }}>
-                  {stop.org}
-                </h2>
+          {/* Bottom HUD */}
+          <div style={{
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            right: 0,
+            padding: "20px 96px",
+            display: "flex",
+            alignItems: "center",
+            gap: "28px",
+            background: "rgba(8,8,8,0.6)",
+            backdropFilter: "blur(8px)",
+          }}>
+            <div style={{
+              fontFamily: "var(--font-mono)", fontSize: "var(--text-label)",
+              color: "rgba(255,255,255,0.4)", letterSpacing: "var(--tracking-label)",
+              flexShrink: 0, minWidth: "220px",
+            }}>
+              {orderedStops[activeStop]?.year} · {orderedStops[activeStop]?.org}
+            </div>
 
-                <div style={{
-                  fontFamily: "var(--font-mono)", fontSize: "12px",
-                  color: "rgba(255,255,255,0.55)", letterSpacing: "0.16em",
-                  textTransform: "uppercase", marginBottom: "28px",
-                }}>
-                  {stop.role}
-                </div>
+            <div style={{
+              flex: 1, height: "1px",
+              background: "rgba(255,255,255,0.08)",
+              position: "relative",
+            }}>
+              <div
+                ref={progressRef}
+                style={{
+                  position: "absolute", inset: 0,
+                  background: "#1B3A6B",
+                  transformOrigin: "left center",
+                  transform: "scaleX(0)",
+                }}
+              />
+            </div>
 
-                <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
-                  {stop.bullets.map((bullet, j) => (
-                    <li key={j} style={{
-                      fontFamily: "var(--font-dm)",
-                      fontSize: "clamp(14px, 1.2vw, 16px)",
-                      color: "rgba(255,255,255,0.75)",
-                      lineHeight: 1.75,
-                      paddingLeft: "20px",
-                      position: "relative",
-                      marginBottom: j < stop.bullets.length - 1 ? "10px" : 0,
-                    }}>
-                      <span style={{
-                        position: "absolute", left: 0, top: "0.6em",
-                        width: "6px", height: "1px",
-                        background: stop.accent, display: "block",
-                      }} />
-                      {bullet}
-                    </li>
-                  ))}
-                </ul>
-              </div>
+            <div style={{
+              fontFamily: "var(--font-mono)", fontSize: "var(--text-label)",
+              color: "rgba(255,255,255,0.4)", letterSpacing: "var(--tracking-label)",
+              flexShrink: 0,
+            }}>
+              {String(activeStop + 1).padStart(2, "0")} / {String(orderedStops.length).padStart(2, "0")}
             </div>
           </div>
-        </section>
-      ))}
+        </div>
+      </div>
 
-      {/* Footer */}
-      <div className="px-6 md:px-16 py-24 flex flex-col md:flex-row items-start md:items-center justify-between gap-8"
-        style={{ background: "#080808", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+      {/* ── Mobile: vertical scroll ────────────────────────────── */}
+      <div className="lg:hidden">
+        <div className="fixed bottom-6 left-1/2 z-50" style={{ transform: "translateX(-50%)" }}>
+          <button
+            onClick={() => setMobileNavOpen(v => !v)}
+            style={{
+              fontFamily: "var(--font-mono)", fontSize: "var(--text-label)",
+              color: "#ffffff", letterSpacing: "var(--tracking-label)",
+              background: "rgba(27,58,107,0.95)",
+              border: "1px solid rgba(255,255,255,0.15)",
+              padding: "10px 20px", cursor: "pointer",
+              backdropFilter: "blur(8px)",
+            }}
+          >
+            {orderedStops[activeStop]?.year} · {orderedStops[activeStop]?.city} ↑
+          </button>
+          {mobileNavOpen && (
+            <div style={{
+              position: "absolute", bottom: "100%", left: "50%",
+              transform: "translateX(-50%)", marginBottom: "8px",
+              background: "rgba(8,8,8,0.97)",
+              padding: "8px 0", backdropFilter: "blur(12px)", minWidth: "220px",
+            }}>
+              {orderedStops.map((s, i) => (
+                <a
+                  key={i}
+                  href={`#v-stop-${i}`}
+                  onClick={() => setMobileNavOpen(false)}
+                  style={{
+                    display: "block", padding: "10px 20px",
+                    fontFamily: "var(--font-mono)", fontSize: "var(--text-label)",
+                    color: activeStop === i ? "#ffffff" : "rgba(255,255,255,0.68)",
+                    letterSpacing: "var(--tracking-label)", textDecoration: "none",
+                    background: activeStop === i ? "rgba(27,58,107,0.4)" : "transparent",
+                  }}
+                >
+                  {s.year} · {s.org}
+                </a>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {orderedStops.map((stop, i) => (
+          <section
+            key={i}
+            id={`v-stop-${i}`}
+            className={`v-stop-section-${i} relative w-full flex items-center`}
+            style={{
+              minHeight: "100vh",
+              background: stop.bg,
+            }}
+          >
+            <div className="w-full px-6 pt-28 pb-20">
+              <StopContent stop={stop} variant="vertical" />
+            </div>
+          </section>
+        ))}
+      </div>
+
+      {/* ── Footer ───────────────────────────────────────────── */}
+      <div
+        className="px-6 md:px-16 py-24 flex flex-col md:flex-row items-start md:items-center justify-between gap-8"
+        style={{ background: "#080808" }}
+      >
         <div>
           <div style={{
             fontFamily: "var(--font-cormorant)",
-            fontSize: "clamp(28px, 3.5vw, 48px)",
-            fontWeight: 500, color: "#ffffff", lineHeight: 1.15, marginBottom: "12px",
+            fontSize: "var(--text-head)",
+            fontWeight: 500, color: "#ffffff", lineHeight: "var(--leading-snug)", marginBottom: "12px",
           }}>
             Still building.
           </div>
           <div style={{
-            fontFamily: "var(--font-dm)", fontSize: "14px",
-            color: "rgba(255,255,255,0.55)",
+            fontFamily: "var(--font-dm)", fontSize: "var(--text-meta)",
+            color: "rgba(255,255,255,0.72)",
           }}>
             London to Continental Africa.
           </div>
         </div>
         <Link href="/" style={{
           display: "inline-flex", alignItems: "center", gap: "10px",
-          fontFamily: "var(--font-mono)", fontSize: "13px", color: "#ffffff",
-          letterSpacing: "0.16em", textDecoration: "none", flexShrink: 0,
+          fontFamily: "var(--font-mono)", fontSize: "var(--text-label)", color: "#ffffff",
+          letterSpacing: "var(--tracking-label)", textDecoration: "none", flexShrink: 0,
           background: "#1B3A6B", border: "1px solid #1B3A6B", padding: "13px 26px",
         }}>
           ← HOME
         </Link>
       </div>
+
     </main>
   );
 }

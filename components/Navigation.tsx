@@ -5,8 +5,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 const links = [
-  { label: "HOME", href: "/" },
-  { label: "WORK", href: "/journey" },
+  { label: "JOURNEY", href: "/journey" },
   { label: "CONTACT", href: "/#contact" },
 ];
 
@@ -16,19 +15,16 @@ export function Navigation() {
   const [open, setOpen] = useState(false);
 
   const bg = isLight ? "rgba(255,255,255,0.96)" : "rgba(8,8,8,0.94)";
-  const border = isLight
-    ? "1px solid rgba(10,10,10,0.07)"
-    : "1px solid rgba(255,255,255,0.06)";
   const logoColor = isLight ? "#0A0A0A" : "#ffffff";
   const activeColor = isLight ? "#0A0A0A" : "#ffffff";
-  const inactiveColor = isLight ? "rgba(10,10,10,0.55)" : "rgba(255,255,255,0.65)";
+  const inactiveColor = isLight ? "rgba(10,10,10,0.65)" : "rgba(255,255,255,0.72)";
   const iconColor = isLight ? "#0A0A0A" : "#ffffff";
 
   return (
     <>
       <nav
         className="fixed top-0 left-0 right-0 z-50 px-6 md:px-16"
-        style={{ background: bg, backdropFilter: "blur(14px)", borderBottom: border, height: "60px" }}
+        style={{ background: bg, backdropFilter: "blur(14px)", height: "60px" }}
       >
         <div className="flex items-center justify-between h-full">
           {/* Logo */}
@@ -37,7 +33,7 @@ export function Navigation() {
             onClick={() => setOpen(false)}
             style={{
               fontFamily: "var(--font-cormorant)",
-              fontSize: "17px",
+              fontSize: "18px",
               fontWeight: 600,
               color: logoColor,
               textDecoration: "none",
@@ -60,14 +56,10 @@ export function Navigation() {
                   href={link.href}
                   style={{
                     fontFamily: "var(--font-mono)",
-                    fontSize: "12px",
-                    letterSpacing: "0.22em",
+                    fontSize: "var(--text-label)",
+                    letterSpacing: "var(--tracking-nav)",
                     color: isActive ? activeColor : inactiveColor,
                     textDecoration: "none",
-                    borderBottom: isActive
-                      ? `1px solid ${isLight ? "rgba(10,10,10,0.45)" : "rgba(255,255,255,0.45)"}`
-                      : "1px solid transparent",
-                    paddingBottom: "2px",
                     transition: "color 0.2s",
                   }}
                 >
@@ -131,7 +123,6 @@ export function Navigation() {
           top: "60px",
           background: isLight ? "rgba(255,255,255,0.98)" : "rgba(8,8,8,0.98)",
           backdropFilter: "blur(16px)",
-          borderBottom: open ? border : "none",
           maxHeight: open ? "300px" : "0px",
           transition: "max-height 0.3s ease, border-bottom 0.3s",
         }}
@@ -148,8 +139,8 @@ export function Navigation() {
                 onClick={() => setOpen(false)}
                 style={{
                   fontFamily: "var(--font-mono)",
-                  fontSize: "13px",
-                  letterSpacing: "0.22em",
+                  fontSize: "var(--text-label)",
+                  letterSpacing: "var(--tracking-nav)",
                   color: isActive ? activeColor : inactiveColor,
                   textDecoration: "none",
                 }}

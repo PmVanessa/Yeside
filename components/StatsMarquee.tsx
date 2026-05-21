@@ -1,88 +1,100 @@
 "use client";
 
+import { useEffect, useRef } from "react";
+import { getGsap } from "@/lib/gsap";
+
 const stats = [
-  { n: "20+", l: "YEARS" },
-  { n: "12+", l: "ROLES" },
-  { n: "8",   l: "MARKETS" },
+  { n: "20+", label: "YEARS",   context: "Two continents. One direction." },
+  { n: "12+", label: "ROLES",   context: "From analyst to board director." },
+  { n: "8",   label: "MARKETS", context: "Entered on purpose." },
 ];
 
-// Repeat enough times for a seamless infinite loop
-const track = [...stats, ...stats, ...stats, ...stats];
-
 export function StatsMarquee() {
+  const ref = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    let ctx: { revert: () => void } | null = null;
+
+    async function init() {
+      const { gsap } = await getGsap();
+
+      ctx = gsap.context(() => {
+        gsap.fromTo(".sm-stat", { opacity: 0, x: -24 }, {
+          opacity: 1, x: 0,
+          duration: 1, stagger: 0.2, ease: "power3.out",
+          scrollTrigger: {
+            trigger: ref.current, start: "top 78%",
+            toggleActions: "play none none reset",
+          },
+        });
+      }, ref);
+    }
+
+    init();
+
+    return () => { ctx?.revert(); };
+  }, []);
+
   return (
-    <>
-      <style>{`
-        @keyframes stats-scroll {
-          from { transform: translateX(0); }
-          to   { transform: translateX(-50%); }
-        }
-        .stats-track {
-          animation: stats-scroll 20s linear infinite;
-          will-change: transform;
-        }
-        .stats-track:hover {
-          animation-play-state: paused;
-        }
-      `}</style>
-
-      <div style={{
+    <section
+      ref={ref}
+      style={{
         background: "#0F1F3D",
-        borderBottom: "1px solid rgba(255,255,255,0.06)",
-        padding: "48px 0",
-        overflow: "hidden",
-        position: "relative",
-      }}>
-        {/* Edge fades */}
-        <div style={{
-          position: "absolute", inset: "0 auto 0 0", width: 100, zIndex: 2,
-          background: "linear-gradient(to right, #0F1F3D, transparent)",
-          pointerEvents: "none",
-        }} />
-        <div style={{
-          position: "absolute", inset: "0 0 0 auto", width: 100, zIndex: 2,
-          background: "linear-gradient(to left, #0F1F3D, transparent)",
-          pointerEvents: "none",
-        }} />
+        padding: "clamp(80px, 12vh, 140px) 0",
+      }}
+    >
+      <div className="px-6 md:px-16">
+        {stats.map((s, i) => (
+          <div
+            key={i}
+            className="sm-stat"
+            style={{
+              opacity: 0,
+              display: "flex",
+              alignItems: "baseline",
+              gap: "clamp(24px, 4vw, 64px)",
+              paddingBottom: i < stats.length - 1 ? "clamp(40px, 6vh, 72px)" : "0",
+              marginBottom: i < stats.length - 1 ? "clamp(40px, 6vh, 72px)" : "0",
+              borderBottom: "none",
+            }}
+          >
+            {/* The number — brass, large enough to stop you */}
+            <div style={{
+              fontFamily: "var(--font-cormorant)",
+              fontSize: "clamp(80px, 11vw, 160px)",
+              fontWeight: 600,
+              color: "#B5892B",
+              lineHeight: 0.88,
+              flexShrink: 0,
+              minWidth: "clamp(140px, 16vw, 260px)",
+            }}>
+              {s.n}
+            </div>
 
-        <div
-          className="stats-track"
-          style={{ display: "flex", alignItems: "flex-start", width: "max-content" }}
-        >
-          {track.map((s, i) => (
-            <div
-              key={i}
-              style={{
-                display: "flex",
-                alignItems: "flex-start",
-                flexShrink: 0,
-                padding: "0 140px",
-              }}
-            >
-              <div>
-                <div style={{
-                  fontFamily: "var(--font-cormorant)",
-                  fontSize: "clamp(36px, 4vw, 52px)",
-                  fontWeight: 600,
-                  color: "#ffffff",
-                  lineHeight: 1,
-                }}>
-                  {s.n}
-                </div>
-                <div style={{
-                  fontFamily: "var(--font-mono)",
-                  fontSize: "14px",
-                  color: "rgba(255,255,255,0.7)",
-                  letterSpacing: "0.18em",
-                  marginTop: "10px",
-                }}>
-                  {s.l}
-                </div>
+            {/* Label + context — anchored to the number baseline */}
+            <div>
+              <div style={{
+                fontFamily: "var(--font-mono)",
+                fontSize: "var(--text-label)",
+                color: "rgba(255,255,255,0.85)",
+                letterSpacing: "var(--tracking-wide)",
+                marginBottom: "10px",
+              }}>
+                {s.label}
+              </div>
+              <div style={{
+                fontFamily: "var(--font-cormorant)",
+                fontSize: "var(--text-lead)",
+                fontStyle: "italic",
+                color: "rgba(255,255,255,0.72)",
+                lineHeight: "var(--leading-snug)",
+              }}>
+                {s.context}
               </div>
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
-    </>
+    </section>
   );
 }

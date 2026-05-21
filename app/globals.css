@@ -5,10 +5,40 @@
   --color-blue-deep: #1B3A6B;
   --color-blue-light: #F0F4FF;
   --color-near-black: #0A0A0A;
+  --color-warm: #B5892B;        /* brass — Lagos warmth, appears progressively */
 
   --font-cormorant: var(--font-cormorant);
   --font-dm: var(--font-dm);
   --font-mono: var(--font-mono);
+}
+
+/* ── Type scale ──────────────────────────────────────────────
+   Five levels. Everything on the site maps to one of these.
+   ─────────────────────────────────────────────────────────── */
+:root {
+  /* Sizes */
+  --text-label:   12px;                          /* section labels, metadata, nav  */
+  --text-meta:    14px;                          /* credentials, sub-labels        */
+  --text-body:    16px;                          /* body copy, bullets             */
+  --text-lead:    clamp(20px, 2vw, 26px);        /* taglines, pull text            */
+  --text-statement: clamp(36px, 4.2vw, 60px);   /* hero positioning statement     */
+  --text-head:    clamp(32px, 4vw, 52px);        /* sub-section headings           */
+  --text-display: clamp(40px, 6vw, 82px);        /* page hero h1                   */
+  --text-hero:    clamp(82px, 17vw, 196px);      /* name display — editorial scale */
+
+  /* Line heights */
+  --leading-none:   0.86;   /* hero name blocks  */
+  --leading-tight:  1.0;    /* display headings  */
+  --leading-snug:   1.4;    /* lead text         */
+  --leading-normal: 1.75;   /* body copy         */
+  --leading-loose:  1.85;   /* longer paragraphs */
+
+  /* Letter spacing */
+  --tracking-tight:   -0.03em;  /* large display type  */
+  --tracking-normal:   0em;
+  --tracking-label:    0.16em;  /* credential labels   */
+  --tracking-wide:     0.20em;  /* section labels      */
+  --tracking-nav:      0.22em;  /* navigation links    */
 }
 
 @layer base {
@@ -62,6 +92,53 @@ body {
 /* Prevent FOUC on animations */
 .gsap-hidden {
   opacity: 0;
+}
+
+/* OnTheRecord — engagement list rows */
+.otr-row {
+  cursor: pointer;
+  border-radius: 2px;
+  margin: 0 -12px;
+  padding-left: 12px !important;
+  padding-right: 12px !important;
+  transition: background 0.2s ease;
+}
+.otr-row:hover {
+  background: rgba(10,10,10,0.035);
+}
+.otr-row:hover .otr-label {
+  text-decoration: underline;
+  text-decoration-color: rgba(10,10,10,0.30);
+  text-underline-offset: 4px;
+}
+.otr-row:hover .otr-arrow {
+  color: #1B3A6B;
+  transform: translate(3px, -3px);
+}
+
+/* Hero photo — fixed panel on desktop, stacks below text on mobile.
+   Placed here (not in a component <style> tag) so it applies before
+   any JavaScript runs, preventing the photo from being invisible if
+   GSAP initialisation is delayed. */
+@media (min-width: 1024px) {
+  .yk-photo {
+    position: fixed !important;
+    right: 0;
+    top: 0;
+    width: clamp(260px, 32vw, 440px) !important;
+    height: 100vh;
+    margin-top: 0 !important;
+    z-index: 40;
+  }
+  .yk-photo img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center top;
+  }
+  .yk-text-col {
+    padding-right: calc(clamp(260px, 32vw, 440px) + 72px);
+  }
 }
 
 /* Focus-visible: keyboard users get a clear outline, mouse users don't */
