@@ -38,12 +38,12 @@ const engagements = [
 ];
 
 const typeColor: Record<string, string> = {
-  FEATURE:     "#B5892B",
-  KEYNOTE:     "#1B3A6B",
-  DELEGATION:  "#4A7C6F",
-  APPOINTMENT: "rgba(10,10,10,0.65)",
-  RECOGNITION: "rgba(10,10,10,0.65)",
-  SUMMIT:      "rgba(10,10,10,0.65)",
+  FEATURE:     "#C4900A",
+  KEYNOTE:     "#1E50CC",
+  DELEGATION:  "#0B8A6E",
+  APPOINTMENT: "#8B2E8B",
+  RECOGNITION: "#CC3A18",
+  SUMMIT:      "#1A7A44",
 };
 
 export function OnTheRecord() {

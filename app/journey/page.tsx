@@ -1,74 +1,78 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { stops } from "@/data/journey";
+import { getGsap } from "@/lib/gsap";
 
 const orderedStops = [...stops].reverse();
 
+// Photos shown in specific stop panels (keyed by orderedStops index)
+const stopPhotos: Record<number, string> = {
+  5: "/images/yeside-seated.jpg",   // NAS President — the historic moment
+};
+
 export default function JourneyPage() {
-  const outerRef      = useRef<HTMLDivElement>(null);   // tall scroll-space wrapper
-  const stickyRef     = useRef<HTMLDivElement>(null);   // sticky viewport container
-  const trackRef      = useRef<HTMLDivElement>(null);   // translating track
-  const progressRef   = useRef<HTMLDivElement>(null);   // progress fill bar
+  const outerRef      = useRef<HTMLDivElement>(null);
+  const stickyRef     = useRef<HTMLDivElement>(null);
+  const trackRef      = useRef<HTMLDivElement>(null);
+  const progressRef   = useRef<HTMLDivElement>(null);
+  // HUD text refs — updated directly to avoid React re-renders at 60fps
+  const hudLabelRef   = useRef<HTMLDivElement>(null);
+  const hudCounterRef = useRef<HTMLDivElement>(null);
+  // Active stop: state only for mobile nav (not on scroll hot-path)
   const [activeStop, setActiveStop]     = useState(0);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
   useEffect(() => {
-    const isDesktop = window.innerWidth >= 1024;
+    const isDesktop = window.innerWidth >= 768;
     if (!isDesktop) return;
 
-    const outer   = outerRef.current;
-    const track   = trackRef.current;
-    const progress = progressRef.current;
-    if (!outer || !track || !progress) return;
+    let ctx: { revert: () => void } | null = null;
 
-    const outerEl   = outer;
-    const trackEl   = track;
-    const progressEl = progress;
+    async function init() {
+      const { gsap } = await getGsap();
 
-    let raf = 0;
-    let current = 0;   // current translated x (lerped)
-    let target  = 0;   // target translated x (raw from scroll)
+      const outer   = outerRef.current;
+      const track   = trackRef.current;
+      const progress = progressRef.current;
+      if (!outer || !track || !progress) return;
 
-    function onScroll() {
-      const rect     = outerEl.getBoundingClientRect();
-      const scrolled = Math.max(0, -rect.top);
-      const maxScroll = rect.height - window.innerHeight;
-      target = Math.min(scrolled, maxScroll);
+      ctx = gsap.context(() => {
+        const maxTravel = track.scrollWidth - window.innerWidth;
+
+        gsap.to(track, {
+          x: -maxTravel,
+          ease: "none",
+          scrollTrigger: {
+            trigger: outer,
+            start: "top top",
+            end: "bottom bottom",
+            scrub: true,
+            onUpdate(self) {
+              const idx = Math.round(self.progress * (orderedStops.length - 1));
+              const stop = orderedStops[idx];
+              // Direct DOM writes — zero React re-renders on scroll hot-path
+              if (progress) progress.style.transform = `scaleX(${self.progress})`;
+              if (hudLabelRef.current && stop)
+                hudLabelRef.current.textContent = `${stop.year} · ${stop.org}`;
+              if (hudCounterRef.current)
+                hudCounterRef.current.textContent =
+                  `${String(idx + 1).padStart(2, "0")} / ${String(orderedStops.length).padStart(2, "0")}`;
+            },
+          },
+        });
+      });
     }
 
-    function tick() {
-      // Lerp toward target for smooth momentum feel
-      current += (target - current) * 0.12;
-
-      const maxTravel = trackEl.scrollWidth - window.innerWidth;
-      const x = Math.min(current, maxTravel);
-      trackEl.style.transform = `translateX(${-x}px)`;
-
-      // Progress bar
-      const pct = maxTravel > 0 ? x / maxTravel : 0;
-      progressEl.style.transform = `scaleX(${pct})`;
-
-      // Active stop index
-      const idx = Math.round(pct * (orderedStops.length - 1));
-      setActiveStop(idx);
-
-      raf = requestAnimationFrame(tick);
-    }
-
-    window.addEventListener("scroll", onScroll, { passive: true });
-    raf = requestAnimationFrame(tick);
-
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      cancelAnimationFrame(raf);
-    };
+    init();
+    return () => { ctx?.revert(); };
   }, []);
 
   // Mobile: vertical scroll active-stop tracking
   useEffect(() => {
-    const isDesktop = window.innerWidth >= 1024;
+    const isDesktop = window.innerWidth >= 768;
     if (isDesktop) return;
 
     const observers: IntersectionObserver[] = [];
@@ -155,45 +159,63 @@ export default function JourneyPage() {
     <main style={{ background: "#080808" }}>
 
       {/* ── Page hero ─────────────────────────────────────────── */}
-      <section
-        className="relative w-full px-6 md:px-16 pt-36 pb-24"
-      >
-        <div className="absolute pointer-events-none select-none" style={{
-          fontFamily: "var(--font-cormorant)",
-          fontSize: "clamp(160px, 28vw, 400px)",
-          fontWeight: 700, color: "#ffffff", opacity: 0.025,
-          lineHeight: 1, right: "-2vw", bottom: "-0.1em",
-        }}>
-          YK
-        </div>
-        <div className="relative z-10 max-w-3xl">
-          <div style={{
-            fontFamily: "var(--font-mono)", fontSize: "var(--text-label)",
-            color: "rgba(255,255,255,0.68)", letterSpacing: "var(--tracking-nav)",
-            marginBottom: "28px",
-          }}>
-            JOURNEY
+      <section className="relative w-full overflow-hidden" style={{ minHeight: "80vh" }}>
+        {/* Two-column layout: text left, photo right */}
+        <div className="flex flex-col md:flex-row" style={{ minHeight: "80vh" }}>
+
+          {/* Text column */}
+          <div className="relative flex-1 px-6 md:px-16 pt-36 pb-24 flex flex-col justify-center">
+            <div className="absolute pointer-events-none select-none" style={{
+              fontFamily: "var(--font-cormorant)",
+              fontSize: "clamp(160px, 28vw, 400px)",
+              fontWeight: 700, color: "#ffffff", opacity: 0.025,
+              lineHeight: 1, right: "-2vw", bottom: "-0.1em",
+            }}>
+              YK
+            </div>
+            <div className="relative z-10 max-w-xl">
+              <div style={{
+                fontFamily: "var(--font-mono)", fontSize: "var(--text-label)",
+                color: "rgba(255,255,255,0.68)", letterSpacing: "var(--tracking-nav)",
+                marginBottom: "28px",
+              }}>
+                JOURNEY
+              </div>
+              <h1 style={{
+                fontFamily: "var(--font-cormorant)",
+                fontSize: "var(--text-display)",
+                fontWeight: 600, color: "#ffffff",
+                lineHeight: "var(--leading-tight)", letterSpacing: "var(--tracking-tight)",
+                marginBottom: "36px",
+              }}>
+                Twenty years.<br />
+                Two continents.<br />
+                One direction.
+              </h1>
+              <p style={{
+                fontFamily: "var(--font-dm)",
+                fontSize: "var(--text-body)",
+                color: "rgba(255,255,255,0.80)",
+                lineHeight: "var(--leading-loose)", maxWidth: "480px",
+              }}>
+                From Deloitte London to the boardrooms of Continental Africa.
+                Every role earned. Every market entered on purpose.
+              </p>
+            </div>
           </div>
-          <h1 style={{
-            fontFamily: "var(--font-cormorant)",
-            fontSize: "var(--text-display)",
-            fontWeight: 600, color: "#ffffff",
-            lineHeight: "var(--leading-tight)", letterSpacing: "var(--tracking-tight)",
-            marginBottom: "36px",
-          }}>
-            Twenty years.<br />
-            Two continents.<br />
-            One direction.
-          </h1>
-          <p style={{
-            fontFamily: "var(--font-dm)",
-            fontSize: "var(--text-body)",
-            color: "rgba(255,255,255,0.80)",
-            lineHeight: "var(--leading-loose)", maxWidth: "480px",
-          }}>
-            From Deloitte London to the boardrooms of Continental Africa.
-            Every role earned. Every market entered on purpose.
-          </p>
+
+          {/* Photo column — 360px tall on mobile, clamp-width + flex-stretch on tablet+ (all via CSS) */}
+          <div className="journey-hero-photo relative flex-shrink-0">
+            <Image
+              src="/images/yeside-coral.jpg"
+              alt="Yeside Kazeem"
+              fill
+              priority
+              sizes="(max-width: 767px) 100vw, 32vw"
+              style={{ objectFit: "cover", objectPosition: "center top" }}
+            />
+          </div>
+
         </div>
       </section>
 
@@ -205,7 +227,7 @@ export default function JourneyPage() {
           Total outer height = viewport + (stops - 1) * viewport = stops * 100vh
       */}
       <div
-        className="hidden lg:block"
+        className="hidden md:block"
         ref={outerRef}
         style={{ height: `${orderedStops.length * 100}vh` }}
       >
@@ -228,23 +250,50 @@ export default function JourneyPage() {
               willChange: "transform",
             }}
           >
-            {orderedStops.map((stop, i) => (
-              <div
-                key={i}
-                style={{
-                  width: "100vw",
-                  height: "100%",
-                  flexShrink: 0,
-                  background: stop.bg,
-                  padding: "80px 96px 120px",
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                }}
-              >
-                <StopContent stop={stop} variant="horizontal" />
-              </div>
-            ))}
+            {orderedStops.map((stop, i) => {
+              const photo = stopPhotos[i];
+              return (
+                <div
+                  key={i}
+                  style={{
+                    width: "100vw",
+                    height: "100%",
+                    flexShrink: 0,
+                    background: stop.bg,
+                    display: "flex",
+                    flexDirection: "row",
+                  }}
+                >
+                  {/* Text */}
+                  <div style={{
+                    flex: 1,
+                    padding: "80px clamp(40px, 6.5vw, 96px) 120px",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                  }}>
+                    <StopContent stop={stop} variant="horizontal" />
+                  </div>
+
+                  {/* Optional photo */}
+                  {photo && (
+                    <div style={{
+                      width: "clamp(260px, 32vw, 440px)",
+                      flexShrink: 0,
+                      position: "relative",
+                    }}>
+                      <Image
+                        src={photo}
+                        alt="Yeside Kazeem"
+                        fill
+                        sizes="32vw"
+                        style={{ objectFit: "cover", objectPosition: "center top" }}
+                      />
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </div>
 
           {/* Bottom HUD */}
@@ -253,19 +302,19 @@ export default function JourneyPage() {
             bottom: 0,
             left: 0,
             right: 0,
-            padding: "20px 96px",
+            padding: "20px clamp(24px, 6.5vw, 96px)",
             display: "flex",
             alignItems: "center",
             gap: "28px",
             background: "rgba(8,8,8,0.6)",
             backdropFilter: "blur(8px)",
           }}>
-            <div style={{
+            <div ref={hudLabelRef} style={{
               fontFamily: "var(--font-mono)", fontSize: "var(--text-label)",
               color: "rgba(255,255,255,0.4)", letterSpacing: "var(--tracking-label)",
               flexShrink: 0, minWidth: "220px",
             }}>
-              {orderedStops[activeStop]?.year} · {orderedStops[activeStop]?.org}
+              {orderedStops[0]?.year} · {orderedStops[0]?.org}
             </div>
 
             <div style={{
@@ -284,19 +333,19 @@ export default function JourneyPage() {
               />
             </div>
 
-            <div style={{
+            <div ref={hudCounterRef} style={{
               fontFamily: "var(--font-mono)", fontSize: "var(--text-label)",
               color: "rgba(255,255,255,0.4)", letterSpacing: "var(--tracking-label)",
               flexShrink: 0,
             }}>
-              {String(activeStop + 1).padStart(2, "0")} / {String(orderedStops.length).padStart(2, "0")}
+              01 / {String(orderedStops.length).padStart(2, "0")}
             </div>
           </div>
         </div>
       </div>
 
       {/* ── Mobile: vertical scroll ────────────────────────────── */}
-      <div className="lg:hidden">
+      <div className="md:hidden">
         <div className="fixed bottom-6 left-1/2 z-50" style={{ transform: "translateX(-50%)" }}>
           <button
             onClick={() => setMobileNavOpen(v => !v)}
@@ -317,6 +366,7 @@ export default function JourneyPage() {
               transform: "translateX(-50%)", marginBottom: "8px",
               background: "rgba(8,8,8,0.97)",
               padding: "8px 0", backdropFilter: "blur(12px)", minWidth: "220px",
+              maxHeight: "60vh", overflowY: "auto",
             }}>
               {orderedStops.map((s, i) => (
                 <a
@@ -338,21 +388,33 @@ export default function JourneyPage() {
           )}
         </div>
 
-        {orderedStops.map((stop, i) => (
-          <section
-            key={i}
-            id={`v-stop-${i}`}
-            className={`v-stop-section-${i} relative w-full flex items-center`}
-            style={{
-              minHeight: "100vh",
-              background: stop.bg,
-            }}
-          >
-            <div className="w-full px-6 pt-28 pb-20">
-              <StopContent stop={stop} variant="vertical" />
-            </div>
-          </section>
-        ))}
+        {orderedStops.map((stop, i) => {
+          const photo = stopPhotos[i];
+          return (
+            <section
+              key={i}
+              id={`v-stop-${i}`}
+              className={`v-stop-section-${i} relative w-full`}
+              style={{ minHeight: "100vh", background: stop.bg }}
+            >
+              {/* Photo banner at top of stop, mobile only */}
+              {photo && (
+                <div style={{ position: "relative", width: "100%", height: "280px" }}>
+                  <Image
+                    src={photo}
+                    alt="Yeside Kazeem"
+                    fill
+                    sizes="100vw"
+                    style={{ objectFit: "cover", objectPosition: "center top" }}
+                  />
+                </div>
+              )}
+              <div className="w-full px-6 pb-20" style={{ paddingTop: photo ? "40px" : "112px" }}>
+                <StopContent stop={stop} variant="vertical" />
+              </div>
+            </section>
+          );
+        })}
       </div>
 
       {/* ── Footer ───────────────────────────────────────────── */}

@@ -136,6 +136,8 @@ export function Contact() {
           textDecoration: "none", display: "inline-block",
           background: "#B5892B",
           padding: "15px 36px",
+          whiteSpace: "nowrap",
+          flexShrink: 0,
         }}>
           CONNECT ON LINKEDIN →
         </a>

@@ -141,6 +141,24 @@ body {
   }
 }
 
+/* Journey page — hero photo column */
+/* Mobile only: explicit height so Next.js fill image has room */
+@media (max-width: 767px) {
+  .journey-hero-photo {
+    width: 100%;
+    height: 360px;
+  }
+}
+/* Tablet + desktop: flex stretch fills the parent's height naturally */
+@media (min-width: 768px) {
+  .journey-hero-photo {
+    height: auto;
+    min-height: 500px; /* prevents height:0 before flex layout is computed */
+    align-self: stretch;
+    width: clamp(260px, 32vw, 440px);
+  }
+}
+
 /* Focus-visible: keyboard users get a clear outline, mouse users don't */
 :focus {
   outline: none;
