@@ -24,7 +24,7 @@ const ibmPlexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://yesidekazeem.com"),
+  metadataBase: new URL("https://yeside-git-main-vanessas-projects-6392b104.vercel.app"),
   title: {
     default: "Yeside Kazeem FIA, FNAS · Actuary. Builder. Board Director.",
     template: "%s · Yeside Kazeem",
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     title: "Yeside Kazeem FIA, FNAS",
     description: "Entrepreneurial actuary. Building what Africa's financial future needs.",
     type: "website",
-    url: "https://yesidekazeem.com",
+    url: "https://yeside-git-main-vanessas-projects-6392b104.vercel.app",
     siteName: "Yeside Kazeem",
     images: [
       {
