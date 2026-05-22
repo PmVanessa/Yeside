@@ -128,7 +128,7 @@ export function Contact() {
         ))}
       </div>
 
-      {/* Bottom — one CTA, coordinates */}
+      {/* Bottom — one CTA */}
       <div className="ct-bottom flex flex-col md:flex-row md:items-end justify-between gap-6" style={{ opacity: 0 }}>
         <a href={LINKEDIN} target="_blank" rel="noopener noreferrer" style={{
           fontFamily: "var(--font-mono)", fontSize: "var(--text-label)",
@@ -141,15 +141,6 @@ export function Contact() {
         }}>
           CONNECT ON LINKEDIN →
         </a>
-
-        <div style={{
-          fontFamily: "var(--font-mono)", fontSize: "var(--text-label)",
-          color: "rgba(255,255,255,0.72)", letterSpacing: "0.08em",
-          textAlign: "right", lineHeight: "var(--leading-loose)",
-        }}>
-          51.5074°N, 0.1278°W · LONDON<br />
-          6.5244°N, 3.3792°E · LAGOS
-        </div>
       </div>
     </footer>
   );
