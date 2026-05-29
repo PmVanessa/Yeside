@@ -10,7 +10,7 @@ const orderedStops = [...stops].reverse();
 
 // Photos shown in specific stop panels (keyed by orderedStops index)
 const stopPhotos: Record<number, string> = {
-  5: "/images/yeside-hero.jpg",   // NAS President — the historic moment
+  5: "/images/yeside-coral.jpg",   // NAS President — the historic moment
 };
 
 export default function JourneyPage() {
@@ -301,14 +301,18 @@ export default function JourneyPage() {
                     <div style={{
                       width: "clamp(260px, 32vw, 440px)",
                       flexShrink: 0,
-                      position: "relative",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      padding: "40px",
                     }}>
                       <Image
                         src={photo}
                         alt="Yeside Kazeem"
-                        fill
+                        width={233}
+                        height={216}
                         sizes="32vw"
-                        style={{ objectFit: "cover", objectPosition: "center top" }}
+                        style={{ width: "100%", maxWidth: "233px", height: "auto", display: "block" }}
                       />
                     </div>
                   )}
@@ -420,13 +424,14 @@ export default function JourneyPage() {
             >
               {/* Photo banner at top of stop, mobile only */}
               {photo && (
-                <div style={{ position: "relative", width: "100%", height: "280px" }}>
+                <div style={{ width: "100%", padding: "32px 24px 0", display: "flex", justifyContent: "center" }}>
                   <Image
                     src={photo}
                     alt="Yeside Kazeem"
-                    fill
+                    width={233}
+                    height={216}
                     sizes="100vw"
-                    style={{ objectFit: "cover", objectPosition: "center top" }}
+                    style={{ width: "100%", maxWidth: "233px", height: "auto", display: "block" }}
                   />
                 </div>
               )}
