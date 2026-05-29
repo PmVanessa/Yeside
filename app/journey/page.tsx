@@ -207,7 +207,7 @@ export default function JourneyPage() {
           {/* Photo column — 360px tall on mobile, clamp-width + flex-stretch on tablet+ (all via CSS) */}
           <div className="journey-hero-photo relative flex-shrink-0">
             <Image
-              src="/images/yeside-coral.jpg"
+              src="/images/yeside-hero.jpg"
               alt="Yeside Kazeem"
               fill
               priority
@@ -271,8 +271,29 @@ export default function JourneyPage() {
                     display: "flex",
                     flexDirection: "column",
                     justifyContent: "center",
+                    position: "relative",
+                    overflow: "hidden",
                   }}>
                     <StopContent stop={stop} variant="horizontal" />
+                    {/* Year watermark — fills empty right space when no photo */}
+                    {!photo && (
+                      <div style={{
+                        position: "absolute",
+                        right: "clamp(40px, 6.5vw, 96px)",
+                        bottom: "-0.1em",
+                        fontFamily: "var(--font-cormorant)",
+                        fontSize: "clamp(140px, 22vw, 320px)",
+                        fontWeight: 700,
+                        color: "#ffffff",
+                        opacity: 0.04,
+                        lineHeight: 1,
+                        letterSpacing: "-0.03em",
+                        pointerEvents: "none",
+                        userSelect: "none",
+                      }}>
+                        {stop.year}
+                      </div>
+                    )}
                   </div>
 
                   {/* Optional photo */}

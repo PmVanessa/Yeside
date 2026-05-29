@@ -19,9 +19,9 @@ export function StatsMarquee() {
       const { gsap } = await getGsap();
 
       ctx = gsap.context(() => {
-        gsap.fromTo(".sm-stat", { opacity: 0, x: -24 }, {
-          opacity: 1, x: 0,
-          duration: 1, stagger: 0.2, ease: "power3.out",
+        gsap.fromTo(".sm-stat", { opacity: 0, y: 32 }, {
+          opacity: 1, y: 0,
+          duration: 0.9, stagger: 0.15, ease: "power3.out",
           scrollTrigger: {
             trigger: ref.current, start: "top 78%",
             toggleActions: "play none none reset",
@@ -40,57 +40,55 @@ export function StatsMarquee() {
       ref={ref}
       style={{
         background: "#0F1F3D",
-        padding: "clamp(80px, 12vh, 140px) 0",
+        padding: "clamp(64px, 10vh, 112px) 0",
       }}
     >
-      <div className="px-6 md:px-16">
+      <div
+        className="px-6 md:px-16"
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(3, 1fr)",
+          gap: "clamp(24px, 4vw, 56px)",
+        }}
+      >
         {stats.map((s, i) => (
           <div
             key={i}
             className="sm-stat"
-            style={{
-              opacity: 0,
-              display: "flex",
-              alignItems: "baseline",
-              gap: "clamp(24px, 4vw, 64px)",
-              paddingBottom: i < stats.length - 1 ? "clamp(40px, 6vh, 72px)" : "0",
-              marginBottom: i < stats.length - 1 ? "clamp(40px, 6vh, 72px)" : "0",
-              borderBottom: "none",
-            }}
+            style={{ opacity: 0 }}
           >
-            {/* The number — brass, large enough to stop you */}
+            {/* Number */}
             <div style={{
               fontFamily: "var(--font-cormorant)",
-              fontSize: "clamp(80px, 11vw, 160px)",
+              fontSize: "clamp(56px, 7vw, 120px)",
               fontWeight: 600,
               color: "#B5892B",
               lineHeight: 0.88,
-              flexShrink: 0,
-              minWidth: "clamp(140px, 16vw, 260px)",
+              marginBottom: "14px",
             }}>
               {s.n}
             </div>
 
-            {/* Label + context — anchored to the number baseline */}
-            <div>
-              <div style={{
-                fontFamily: "var(--font-mono)",
-                fontSize: "var(--text-label)",
-                color: "rgba(255,255,255,0.85)",
-                letterSpacing: "var(--tracking-wide)",
-                marginBottom: "10px",
-              }}>
-                {s.label}
-              </div>
-              <div style={{
-                fontFamily: "var(--font-cormorant)",
-                fontSize: "var(--text-lead)",
-                fontStyle: "italic",
-                color: "rgba(255,255,255,0.72)",
-                lineHeight: "var(--leading-snug)",
-              }}>
-                {s.context}
-              </div>
+            {/* Label */}
+            <div style={{
+              fontFamily: "var(--font-mono)",
+              fontSize: "var(--text-label)",
+              color: "rgba(255,255,255,0.85)",
+              letterSpacing: "var(--tracking-wide)",
+              marginBottom: "8px",
+            }}>
+              {s.label}
+            </div>
+
+            {/* Context */}
+            <div style={{
+              fontFamily: "var(--font-cormorant)",
+              fontSize: "clamp(16px, 1.6vw, 22px)",
+              fontStyle: "italic",
+              color: "rgba(255,255,255,0.60)",
+              lineHeight: "var(--leading-snug)",
+            }}>
+              {s.context}
             </div>
           </div>
         ))}

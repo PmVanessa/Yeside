@@ -116,10 +116,28 @@ body {
   transform: translate(3px, -3px);
 }
 
-/* Hero photo — fixed panel on desktop, stacks below text on mobile.
+/* Hero photo — fixed panel on desktop, appears first on mobile.
    Placed here (not in a component <style> tag) so it applies before
    any JavaScript runs, preventing the photo from being invisible if
    GSAP initialisation is delayed. */
+
+/* Mobile / tablet: photo floats to top of flex column, constrained height */
+@media (max-width: 1023px) {
+  .yk-photo {
+    order: -1;         /* move photo before text in flex-col */
+    margin-top: 0 !important;
+    margin-bottom: 36px;
+    height: clamp(240px, 55vw, 360px);
+    overflow: hidden;
+  }
+  .yk-photo img {
+    width: 100% !important;
+    height: auto !important;
+    /* Portrait image — overflow at bottom clips naturally, face shows at top */
+  }
+}
+
+/* Desktop: fixed right panel */
 @media (min-width: 1024px) {
   .yk-photo {
     position: fixed !important;

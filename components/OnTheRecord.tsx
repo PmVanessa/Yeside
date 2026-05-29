@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getGsap } from "@/lib/gsap";
 
 const featured = [
@@ -46,8 +46,16 @@ const typeColor: Record<string, string> = {
   SUMMIT:      "#1A7A44",
 };
 
+const tabs = ["ALL", "KEYNOTE", "APPOINTMENT", "DELEGATION", "RECOGNITION", "SUMMIT"] as const;
+type Tab = typeof tabs[number];
+
 export function OnTheRecord() {
   const ref = useRef<HTMLDivElement>(null);
+  const [activeTab, setActiveTab] = useState<Tab>("ALL");
+
+  const filtered = activeTab === "ALL"
+    ? engagements
+    : engagements.filter(e => e.type === activeTab);
 
   useEffect(() => {
     let ctx: { revert: () => void } | null = null;
@@ -56,6 +64,13 @@ export function OnTheRecord() {
       const { gsap } = await getGsap();
 
       ctx = gsap.context(() => {
+        gsap.fromTo(".otr-header", { opacity: 0, y: 24 }, {
+          opacity: 1, y: 0, duration: 0.8, ease: "power3.out",
+          scrollTrigger: {
+            trigger: ref.current, start: "top 84%",
+            toggleActions: "play none none reset",
+          },
+        });
         gsap.fromTo(".otr-featured-item", { opacity: 0, y: 40 }, {
           opacity: 1, y: 0, duration: 1, stagger: 0.16, ease: "power3.out",
           scrollTrigger: {
@@ -82,13 +97,25 @@ export function OnTheRecord() {
     <section ref={ref} style={{ background: "#F8F7F5" }}>
       <div className="px-6 md:px-16 pt-20 lg:pt-28">
 
-        {/* Section label */}
-        <div style={{
-          fontFamily: "var(--font-mono)", fontSize: "var(--text-label)",
-          color: "rgba(10,10,10,0.60)", letterSpacing: "var(--tracking-wide)",
-          marginBottom: "clamp(48px, 8vh, 88px)",
-        }}>
-          ON THE RECORD
+        {/* Section header */}
+        <div className="otr-header" style={{ opacity: 0, marginBottom: "clamp(48px, 8vh, 88px)" }}>
+          <div style={{
+            fontFamily: "var(--font-mono)", fontSize: "var(--text-label)",
+            color: "rgba(10,10,10,0.60)", letterSpacing: "var(--tracking-wide)",
+            marginBottom: "20px",
+          }}>
+            ON THE RECORD
+          </div>
+          <p style={{
+            fontFamily: "var(--font-cormorant)",
+            fontSize: "var(--text-lead)",
+            fontStyle: "italic",
+            color: "rgba(10,10,10,0.68)",
+            maxWidth: "520px",
+            lineHeight: "var(--leading-snug)",
+          }}>
+            A public record of keynotes, delegations, appointments, and coverage.
+          </p>
         </div>
 
         {/* ── Featured — editorial typographic display ───────── */}
@@ -103,7 +130,6 @@ export function OnTheRecord() {
               display: "block",
               paddingTop: "clamp(40px, 6vh, 72px)",
               paddingBottom: "clamp(40px, 6vh, 72px)",
-              borderBottom: "none",
               textDecoration: "none",
               opacity: 0,
               transition: "opacity 0.2s ease",
@@ -111,7 +137,6 @@ export function OnTheRecord() {
             onMouseEnter={ev => { (ev.currentTarget as HTMLAnchorElement).style.opacity = "0.72"; }}
             onMouseLeave={ev => { (ev.currentTarget as HTMLAnchorElement).style.opacity = "1"; }}
           >
-            {/* Org name — this is the visual anchor, display scale */}
             <div style={{
               fontFamily: "var(--font-cormorant)",
               fontSize: "clamp(56px, 9vw, 130px)",
@@ -124,7 +149,6 @@ export function OnTheRecord() {
               {e.org}
             </div>
 
-            {/* Event label + type/year/arrow on same row */}
             <div style={{
               display: "flex",
               alignItems: "flex-end",
@@ -142,12 +166,7 @@ export function OnTheRecord() {
                 {e.label}
               </div>
 
-              <div style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "16px",
-                flexShrink: 0,
-              }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "16px", flexShrink: 0 }}>
                 <span style={{
                   fontFamily: "var(--font-mono)", fontSize: "var(--text-label)",
                   color: typeColor[e.type] ?? "rgba(10,10,10,0.68)",
@@ -155,20 +174,55 @@ export function OnTheRecord() {
                 }}>
                   {e.type} · {e.year}
                 </span>
-                <span style={{
-                  fontFamily: "var(--font-mono)", fontSize: "var(--text-body)",
-                  color: "rgba(10,10,10,0.65)",
-                }}>↗</span>
+                <span style={{ fontFamily: "var(--font-mono)", fontSize: "var(--text-body)", color: "rgba(10,10,10,0.65)" }}>↗</span>
               </div>
             </div>
           </a>
         ))}
 
-        {/* ── Categorised list ──────────────────────────────── */}
+        {/* ── Filter tabs ───────────────────────────────────── */}
+        <div style={{
+          display: "flex",
+          flexWrap: "wrap",
+          gap: "8px",
+          paddingTop: "clamp(32px, 5vh, 56px)",
+          paddingBottom: "24px",
+        }}>
+          {tabs.map(tab => (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              style={{
+                fontFamily: "var(--font-mono)",
+                fontSize: "var(--text-label)",
+                letterSpacing: "var(--tracking-label)",
+                padding: "8px 16px",
+                cursor: "pointer",
+                border: "1px solid",
+                borderColor: activeTab === tab ? "#0A0A0A" : "rgba(10,10,10,0.20)",
+                background: activeTab === tab ? "#0A0A0A" : "transparent",
+                color: activeTab === tab ? "#ffffff" : "rgba(10,10,10,0.55)",
+                transition: "all 0.18s ease",
+              }}
+            >
+              {tab}
+            </button>
+          ))}
+        </div>
+
+        {/* ── Filtered list ─────────────────────────────────── */}
         <div className="otr-list" style={{ paddingBottom: "clamp(48px, 8vh, 96px)" }}>
-          {engagements.map((e, i) => (
+          {filtered.length === 0 ? (
+            <div style={{
+              fontFamily: "var(--font-mono)", fontSize: "var(--text-label)",
+              color: "rgba(10,10,10,0.40)", letterSpacing: "var(--tracking-label)",
+              padding: "40px 0",
+            }}>
+              No entries in this category.
+            </div>
+          ) : filtered.map((e, i) => (
             <a
-              key={i}
+              key={`${e.year}-${i}`}
               href={e.url}
               target="_blank"
               rel="noopener noreferrer"
@@ -177,10 +231,9 @@ export function OnTheRecord() {
                 display: "block",
                 padding: "28px 0",
                 textDecoration: "none",
-                opacity: 0,
+                opacity: 1,
               }}
             >
-              {/* Label + arrow on same row */}
               <div style={{
                 display: "flex",
                 justifyContent: "space-between",
@@ -201,24 +254,17 @@ export function OnTheRecord() {
                 <span className="otr-arrow" style={{
                   fontFamily: "var(--font-mono)", fontSize: "18px",
                   color: "rgba(10,10,10,0.28)",
-                  flexShrink: 0,
-                  marginTop: "3px",
+                  flexShrink: 0, marginTop: "3px",
                   transition: "color 0.18s ease, transform 0.18s ease",
                 }}>↗</span>
               </div>
 
-              {/* Meta line: type (coloured) · year · org */}
               <div style={{
                 fontFamily: "var(--font-mono)", fontSize: "var(--text-label)",
-                letterSpacing: "var(--tracking-label)",
-                lineHeight: 1,
+                letterSpacing: "var(--tracking-label)", lineHeight: 1,
               }}>
-                <span style={{ color: typeColor[e.type] ?? "rgba(10,10,10,0.65)" }}>
-                  {e.type}
-                </span>
-                <span style={{ color: "rgba(10,10,10,0.42)" }}>
-                  {" · "}{e.year}{" · "}{e.org}
-                </span>
+                <span style={{ color: typeColor[e.type] ?? "rgba(10,10,10,0.65)" }}>{e.type}</span>
+                <span style={{ color: "rgba(10,10,10,0.42)" }}>{" · "}{e.year}{" · "}{e.org}</span>
               </div>
             </a>
           ))}

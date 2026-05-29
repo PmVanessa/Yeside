@@ -6,14 +6,17 @@ import { getGsap } from "@/lib/gsap";
 
 const pillars = [
   {
+    n: "01",
     label: "SPEAKING",
     lines: ["Keynotes. Panels. Summits.", "Corporate governance.", "African financial systems.", "Women in leadership."],
   },
   {
+    n: "02",
     label: "BOARD & ADVISORY",
     lines: ["Independent Non-Executive Director.", "Risk. Governance.", "Strategic oversight."],
   },
   {
+    n: "03",
     label: "AFRICA MISSION",
     lines: ["AADA collaboration.", "Actuarial capacity building.", "Pan-African partnerships."],
   },
@@ -57,15 +60,7 @@ export function Contact() {
             toggleActions: "play none none reset",
           },
         });
-        // Parallax — scrub handles bidirectional automatically
-        gsap.to(".ct-name", {
-          y: -40, ease: "none",
-          scrollTrigger: {
-            trigger: ref.current,
-            start: "top top", end: "bottom top",
-            scrub: 2,
-          },
-        });
+        // Parallax removed — was causing overlap with sections above
       }, ref);
     }
 
@@ -105,10 +100,19 @@ export function Contact() {
         </p>
       </div>
 
-      {/* Three pillars — content, no CTAs, no borders between them */}
+      {/* Three pillars */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-10 py-16">
         {pillars.map((col, i) => (
           <div key={i} className="ct-col" style={{ opacity: 0 }}>
+            {/* Number */}
+            <div style={{
+              fontFamily: "var(--font-mono)", fontSize: "var(--text-label)",
+              color: "rgba(255,255,255,0.25)", letterSpacing: "var(--tracking-label)",
+              marginBottom: "12px",
+            }}>
+              {col.n}
+            </div>
+            {/* Label */}
             <div style={{
               fontFamily: "var(--font-mono)", fontSize: "var(--text-label)",
               color: "#B5892B", letterSpacing: "var(--tracking-wide)",
@@ -128,7 +132,7 @@ export function Contact() {
         ))}
       </div>
 
-      {/* Bottom — one CTA */}
+      {/* Bottom — CTA */}
       <div className="ct-bottom flex flex-col md:flex-row md:items-end justify-between gap-6" style={{ opacity: 0 }}>
         <a href={LINKEDIN} target="_blank" rel="noopener noreferrer" style={{
           fontFamily: "var(--font-mono)", fontSize: "var(--text-label)",
@@ -141,6 +145,13 @@ export function Contact() {
         }}>
           CONNECT ON LINKEDIN →
         </a>
+        <div style={{
+          fontFamily: "var(--font-mono)", fontSize: "var(--text-label)",
+          color: "rgba(255,255,255,0.72)", letterSpacing: "0.08em",
+          textAlign: "right", lineHeight: "var(--leading-loose)",
+        }}>
+          LONDON · LAGOS
+        </div>
       </div>
     </footer>
   );
