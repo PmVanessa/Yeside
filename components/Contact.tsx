@@ -60,7 +60,17 @@ export function Contact() {
             toggleActions: "play none none reset",
           },
         });
-        // Parallax removed — was causing overlap with sections above
+        // Parallax on wrapper — separate from .ct-name entry animation, no conflict
+        gsap.to(".ct-content", {
+          y: -48,
+          ease: "none",
+          scrollTrigger: {
+            trigger: ref.current,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 2,
+          },
+        });
       }, ref);
     }
 
@@ -73,85 +83,88 @@ export function Contact() {
     <footer
       id="contact"
       ref={ref}
-      className="w-full min-h-screen flex flex-col justify-between px-6 md:px-16 py-20"
+      className="w-full min-h-screen px-6 md:px-16"
       style={{ background: "#0C0907", overflow: "hidden" }}
     >
-      {/* Name */}
-      <div>
-        <div className="ct-name" style={{
-          fontFamily: "var(--font-cormorant)",
-          fontSize: "clamp(72px, 13vw, 180px)",
-          fontWeight: 600, color: "#ffffff",
-          lineHeight: 0.86, letterSpacing: "-0.03em",
-          marginBottom: "44px", opacity: 0,
-        }}>
-          YESIDE<br />KAZEEM
-        </div>
+      {/* ct-content is the parallax target — keeps the entry animations on child elements separate */}
+      <div className="ct-content flex flex-col justify-between py-20" style={{ minHeight: "100vh" }}>
 
-        <p className="ct-sub" style={{
-          fontFamily: "var(--font-cormorant)",
-          fontSize: "var(--text-statement)",
-          fontStyle: "italic", fontWeight: 400,
-          color: "rgba(255,255,255,0.70)",
-          maxWidth: "520px", lineHeight: "var(--leading-snug)",
-          opacity: 0,
-        }}>
-          Building what matters, wherever it needs to be built.
-        </p>
-      </div>
-
-      {/* Three pillars */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-10 py-16">
-        {pillars.map((col, i) => (
-          <div key={i} className="ct-col" style={{ opacity: 0 }}>
-            {/* Number */}
-            <div style={{
-              fontFamily: "var(--font-mono)", fontSize: "var(--text-label)",
-              color: "rgba(255,255,255,0.25)", letterSpacing: "var(--tracking-label)",
-              marginBottom: "12px",
-            }}>
-              {col.n}
-            </div>
-            {/* Label */}
-            <div style={{
-              fontFamily: "var(--font-mono)", fontSize: "var(--text-label)",
-              color: "#B5892B", letterSpacing: "var(--tracking-wide)",
-              marginBottom: "20px",
-            }}>
-              {col.label}
-            </div>
-            {col.lines.map((line, j) => (
-              <div key={j} style={{
-                fontFamily: "var(--font-dm)", fontSize: "var(--text-body)",
-                color: "rgba(255,255,255,0.68)", lineHeight: "var(--leading-normal)",
-              }}>
-                {line}
-              </div>
-            ))}
+        {/* Name */}
+        <div>
+          <div className="ct-name" style={{
+            fontFamily: "var(--font-cormorant)",
+            fontSize: "clamp(72px, 13vw, 180px)",
+            fontWeight: 600, color: "#ffffff",
+            lineHeight: 0.86, letterSpacing: "-0.03em",
+            marginBottom: "44px", opacity: 0,
+          }}>
+            YESIDE<br />KAZEEM
           </div>
-        ))}
-      </div>
 
-      {/* Bottom — CTA */}
-      <div className="ct-bottom flex flex-col md:flex-row md:items-end justify-between gap-6" style={{ opacity: 0 }}>
-        <a href={LINKEDIN} target="_blank" rel="noopener noreferrer" style={{
-          fontFamily: "var(--font-mono)", fontSize: "var(--text-label)",
-          color: "#0C0907", letterSpacing: "var(--tracking-label)",
-          textDecoration: "none", display: "inline-block",
-          background: "#B5892B",
-          padding: "15px 36px",
-          whiteSpace: "nowrap",
-          flexShrink: 0,
-        }}>
-          CONNECT ON LINKEDIN →
-        </a>
-        <div style={{
-          fontFamily: "var(--font-mono)", fontSize: "var(--text-label)",
-          color: "rgba(255,255,255,0.72)", letterSpacing: "0.08em",
-          textAlign: "right", lineHeight: "var(--leading-loose)",
-        }}>
-          LONDON · LAGOS
+          <p className="ct-sub" style={{
+            fontFamily: "var(--font-cormorant)",
+            fontSize: "var(--text-statement)",
+            fontStyle: "italic", fontWeight: 400,
+            color: "rgba(255,255,255,0.70)",
+            maxWidth: "520px", lineHeight: "var(--leading-snug)",
+            opacity: 0,
+          }}>
+            Building what matters, wherever it needs to be built.
+          </p>
         </div>
+
+        {/* Three pillars */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 py-16">
+          {pillars.map((col, i) => (
+            <div key={i} className="ct-col" style={{ opacity: 0 }}>
+              <div style={{
+                fontFamily: "var(--font-mono)", fontSize: "var(--text-label)",
+                color: "rgba(255,255,255,0.25)", letterSpacing: "var(--tracking-label)",
+                marginBottom: "12px",
+              }}>
+                {col.n}
+              </div>
+              <div style={{
+                fontFamily: "var(--font-mono)", fontSize: "var(--text-label)",
+                color: "#B5892B", letterSpacing: "var(--tracking-wide)",
+                marginBottom: "20px",
+              }}>
+                {col.label}
+              </div>
+              {col.lines.map((line, j) => (
+                <div key={j} style={{
+                  fontFamily: "var(--font-dm)", fontSize: "var(--text-body)",
+                  color: "rgba(255,255,255,0.68)", lineHeight: "var(--leading-normal)",
+                }}>
+                  {line}
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+
+        {/* Bottom — CTA */}
+        <div className="ct-bottom flex flex-col md:flex-row md:items-end justify-between gap-6" style={{ opacity: 0 }}>
+          <a href={LINKEDIN} target="_blank" rel="noopener noreferrer" style={{
+            fontFamily: "var(--font-mono)", fontSize: "var(--text-label)",
+            color: "#0C0907", letterSpacing: "var(--tracking-label)",
+            textDecoration: "none", display: "inline-block",
+            background: "#B5892B",
+            padding: "15px 36px",
+            whiteSpace: "nowrap",
+            flexShrink: 0,
+          }}>
+            CONNECT ON LINKEDIN →
+          </a>
+          <div style={{
+            fontFamily: "var(--font-mono)", fontSize: "var(--text-label)",
+            color: "rgba(255,255,255,0.72)", letterSpacing: "0.08em",
+            textAlign: "right", lineHeight: "var(--leading-loose)",
+          }}>
+            LONDON · LAGOS
+          </div>
+        </div>
+
       </div>
     </footer>
   );
