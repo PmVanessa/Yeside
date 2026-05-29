@@ -10,7 +10,7 @@ const orderedStops = [...stops].reverse();
 
 // Photos shown in specific stop panels (keyed by orderedStops index)
 const stopPhotos: Record<number, string> = {
-  5: "/images/yeside-seated.jpg",   // NAS President — the historic moment
+  5: "/images/yeside-hero.jpg",   // NAS President — the historic moment
 };
 
 export default function JourneyPage() {
@@ -207,7 +207,7 @@ export default function JourneyPage() {
           {/* Photo column — 360px tall on mobile, clamp-width + flex-stretch on tablet+ (all via CSS) */}
           <div className="journey-hero-photo relative flex-shrink-0">
             <Image
-              src="/images/yeside-hero.jpg"
+              src="/images/yeside-seated.jpg"
               alt="Yeside Kazeem"
               fill
               priority
